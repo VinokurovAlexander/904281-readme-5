@@ -1,6 +1,6 @@
 import {Module} from "@nestjs/common";
 import {ConfigModule} from "@nestjs/config";
-import { mongoConfig } from "./mongo";
+import { mongoConfig} from "../../lib/mongo";
 
 @Module({
   imports: [
