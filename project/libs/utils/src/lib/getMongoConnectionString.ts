@@ -2,7 +2,7 @@ interface Params {
   username: string,
   password: string,
   host: string,
-  port: string,
+  port: number,
   databaseName: string,
   authDatabase: string
 }
