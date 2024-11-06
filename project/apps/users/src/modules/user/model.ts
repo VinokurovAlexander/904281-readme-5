@@ -1,17 +1,16 @@
-import { Document } from "mongoose";
-import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
-import {User} from "./user.interface";
+import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { User } from './user.interface';
 
 @Schema({
     collection: 'users',
-    timestamps: true
+    timestamps: true,
 })
-
-class UserModel extends Document implements User {
+export class UserModel extends Document implements User {
     @Prop({ required: true })
     public login: string;
 
-    @Prop({ required: true})
+    @Prop({ required: true })
     public mail: string;
 
     @Prop({ required: true })
@@ -29,8 +28,8 @@ class UserModel extends Document implements User {
     @Prop()
     public subscribers: string[];
 
-    @Prop({ required: true})
+    @Prop({ required: true })
     public id: string;
 }
 
-const UserSchema = SchemaFactory.createForClass(UserModel)
+export const UserSchema = SchemaFactory.createForClass(UserModel);
