@@ -1,8 +1,11 @@
-import {Entity} from "@project/types";
+import { BaseEntity } from '@project/types';
 
-export interface Repository<T extends Entity> {
-  findById(id: T['id']): Promise<T | null>
-  save(entity: T): Promise<T>
-  update(entity: T): Promise<T>
-  deleteById(id: T['id']): Promise<void>
+export interface Repository<T extends BaseEntity> {
+    findById(id: T['id']): Promise<T | null>;
+
+    save(entity: T): Promise<void>;
+
+    update(entity: T): Promise<void>;
+
+    deleteById(id: T['id']): Promise<void>;
 }
