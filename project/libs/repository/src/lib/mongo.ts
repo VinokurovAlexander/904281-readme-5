@@ -1,10 +1,10 @@
 import { Document as BaseDocument, Model } from 'mongoose';
 import { Repository } from './repository.interface';
-import { EntityFactory, StorableEntity } from '@project/types';
+import { BaseEntity, EntityFactory, StorableEntity } from '@project/types';
 import { NotFoundException } from '@nestjs/common';
 
 export abstract class MongoRepository<
-    Entity extends StorableEntity<Entity>,
+    Entity extends BaseEntity & StorableEntity,
     Document extends BaseDocument<Entity['id']>,
 > implements Repository<Entity>
 {

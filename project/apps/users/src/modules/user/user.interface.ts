@@ -2,7 +2,7 @@ import { BaseEntity } from '@project/types';
 
 type IdType = BaseEntity['id'];
 
-export interface User extends BaseEntity {
+export interface BaseUser extends BaseEntity {
     mail: string;
     login: string;
     password: string;

@@ -1,66 +1,67 @@
-import {compare, genSalt, hash} from 'bcrypt'
-import { randomUUID } from 'node:crypto'
-import { User as UserEntity } from "./user.interface";
-import { CreateUserDto } from "./dto";
-import { SALT_ROUNDS } from "./constants";
+import { compare, genSalt, hash } from 'bcrypt';
+import { randomUUID } from 'node:crypto';
+import { BaseUser } from './user.interface';
+import { CreateUserDto } from './dto';
+import { SALT_ROUNDS } from './constants';
+import { StorableEntity } from '@project/types';
 
-type UserIdType = UserEntity['id']
+type UserIdType = BaseUser['id'];
 
-export class User implements UserEntity {
-  public id: string
-  public mail: string
-  public login: string
-  public password: string
-  public registerDate: number
-  public photo: string
-  public following: UserIdType[]
-  public subscribers: UserIdType[]
+export class User implements StorableEntity {
+    public id: string;
+    public mail: string;
+    public login: string;
+    public password: string;
+    public registerDate: number;
+    public photo: string;
+    public following: UserIdType[];
+    public subscribers: UserIdType[];
 
-  constructor(data: CreateUserDto) {
-    this.populate(data)
-  }
-
-  public populate(data: CreateUserDto) {
-    this.mail = data.mail
-    this.login = data.login
-    this.password = data.password
-    this.photo = data.photo
-    this.following = []
-    this.subscribers = []
-  }
-
-  public toPOJO() {
-    return {
-      id: this.id,
-      mail: this.mail,
-      login: this.login,
-      password: this.password,
-      registerDate: this.registerDate,
-      photo: this.photo,
-      following: this.following,
-      subscribers: this.subscribers
+    constructor(data: CreateUserDto) {
+        this.populate(data);
     }
-  }
 
-  public async comparePassword(password: string) {
-    return compare(password, this.password)
-  }
+    public populate(data: CreateUserDto) {
+        this.mail = data.mail;
+        this.login = data.login;
+        this.password = data.password;
+        this.photo = data.photo;
+        this.following = [];
+        this.subscribers = [];
+    }
 
-  private async getPasswordHash(password: string) {
-    const salt = await genSalt(SALT_ROUNDS)
+    public toPOJO() {
+        return {
+            id: this.id,
+            mail: this.mail,
+            login: this.login,
+            password: this.password,
+            registerDate: this.registerDate,
+            photo: this.photo,
+            following: this.following,
+            subscribers: this.subscribers,
+        };
+    }
 
-    return await hash(password, salt)
-  }
+    public async comparePassword(password: string) {
+        return compare(password, this.password);
+    }
 
-  public async init() {
-    const passwordHash = await this.getPasswordHash(this.password)
-    const id = randomUUID()
-    const registerDate = Date.now()
+    private async getPasswordHash(password: string) {
+        const salt = await genSalt(SALT_ROUNDS);
 
-    this.password = passwordHash
-    this.id = id
-    this.registerDate = registerDate
+        return await hash(password, salt);
+    }
 
-    return this
-  }
+    public async init() {
+        const passwordHash = await this.getPasswordHash(this.password);
+        const id = randomUUID();
+        const registerDate = Date.now();
+
+        this.password = passwordHash;
+        this.id = id;
+        this.registerDate = registerDate;
+
+        return this;
+    }
 }

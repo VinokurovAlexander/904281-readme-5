@@ -1,12 +1,23 @@
-import {MemoryRepository} from "@project/repository";
-import { User } from "./user.entity";
-import {Injectable} from "@nestjs/common";
+import { MongoRepository } from '@project/repository';
+import { User } from './user.entity';
+import { Injectable } from '@nestjs/common';
+import { UserModel } from './model';
+import { UserFactory } from './factory';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
-export class UsersRepository extends MemoryRepository<User> {
-  public findByMail(mail: string): User | undefined {
-    const entities = Array.from(this.entities.values())
+export class UsersRepository extends MongoRepository<User, UserModel> {
+    constructor(
+        entityFactory: UserFactory,
+        @InjectModel(UserModel.name) model: Model<UserModel>,
+    ) {
+        super(entityFactory, model);
+    }
 
-    return entities.find(entity => entity.mail === mail)
-  }
+    public async findByEmail(mail: string) {
+        const document = await this.model.findOne({ mail }).exec();
+
+        return this.createEntityFromDocument(document);
+    }
 }
