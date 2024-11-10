@@ -13,13 +13,7 @@ export abstract class MongoRepository<
         protected readonly model: Model<Document>,
     ) {}
 
-    protected createEntityFromDocument(
-        document: Document | null,
-    ): Entity | null {
-        if (!document) {
-            return null;
-        }
-
+    protected createEntityFromDocument(document: Document): Entity {
         const plainObject = document.toObject({ versionKey: false });
 
         return this.entity.create(plainObject);
@@ -27,6 +21,10 @@ export abstract class MongoRepository<
 
     public async findById(id: Entity['id']): Promise<Entity | null> {
         const document = await this.model.findById(id).exec();
+
+        if (!document) {
+            throw new NotFoundException('User not found');
+        }
 
         return this.createEntityFromDocument(document);
     }

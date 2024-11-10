@@ -14,7 +14,7 @@ export class AuthService {
 
     public async register(dto: CreateUserDto) {
         const { mail } = dto;
-        const existUser = this.usersRepository.findByMail(mail);
+        const existUser = await this.usersRepository.findByMail(mail);
 
         if (existUser) {
             throw new ConflictException('User with this email exists');
