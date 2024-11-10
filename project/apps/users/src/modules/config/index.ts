@@ -1,0 +1,1 @@
+export { ConfigUsersModule } from './module'

@@ -6,7 +6,10 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
+
 import { AppModule } from './app/module';
+
+import { initSpecification } from './specification';
 
 const VERSION = 'v1'
 const globalPrefix = `api/${VERSION}`;
@@ -17,6 +20,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix(globalPrefix);
+
+  initSpecification({ version: VERSION, app})
 
   await app.listen(port);
 

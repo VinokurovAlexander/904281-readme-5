@@ -1,1 +1,5 @@
-export { Entity } from './lib/entity.intreface'
+export {
+    BaseEntity,
+    EntityFactory,
+    StorableEntity,
+} from './lib/entity.intreface';
