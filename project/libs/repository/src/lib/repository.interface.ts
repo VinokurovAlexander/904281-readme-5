@@ -3,7 +3,7 @@ import { BaseEntity } from '@project/types';
 export interface Repository<T extends BaseEntity> {
     findById(id: T['id']): Promise<T | null>;
 
-    save(entity: T): Promise<void>;
+    save(entity: T): Promise<T>;
 
     update(entity: T): Promise<void>;
 
