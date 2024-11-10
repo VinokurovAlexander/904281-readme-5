@@ -15,7 +15,7 @@ export class UsersRepository extends MongoRepository<User, UserModel> {
         super(entityFactory, model);
     }
 
-    public async findByEmail(mail: string) {
+    public async findByMail(mail: string) {
         const document = await this.model.findOne({ mail }).exec();
 
         return this.createEntityFromDocument(document);

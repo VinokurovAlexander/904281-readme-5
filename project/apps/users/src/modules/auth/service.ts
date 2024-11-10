@@ -1,39 +1,44 @@
-import {ConflictException, Injectable, NotFoundException, UnauthorizedException} from "@nestjs/common";
-import {CreateUserDto, LoginUserDto} from "../user/dto";
-import { UsersRepository } from "../user/repository";
-import {User} from "../user/user.entity";
+import {
+    ConflictException,
+    Injectable,
+    NotFoundException,
+    UnauthorizedException,
+} from '@nestjs/common';
+import { CreateUserDto, LoginUserDto } from '../user/dto';
+import { UsersRepository } from '../user/repository';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly usersRepository: UsersRepository) {}
+    constructor(private readonly usersRepository: UsersRepository) {}
 
-  public async register(dto: CreateUserDto ) {
-    const { mail } = dto
-    const existUser = this.usersRepository.findByMail(mail)
+    public async register(dto: CreateUserDto) {
+        const { mail } = dto;
+        const existUser = this.usersRepository.findByMail(mail);
 
-    if (existUser) {
-      throw new ConflictException('User with this email exists')
+        if (existUser) {
+            throw new ConflictException('User with this email exists');
+        }
+
+        const user = await new User(dto).init();
+
+        return this.usersRepository.save(user);
     }
 
-    const user = await new User(dto).init()
+    public async verifyUser(dto: LoginUserDto) {
+        const { mail, password } = dto;
+        const user = await this.usersRepository.findByMail(mail);
 
-    return this.usersRepository.save(user)
-  }
+        if (!user) {
+            throw new NotFoundException('User not found');
+        }
 
-  public async verifyUser(dto: LoginUserDto) {
-    const { mail, password } = dto
-    const user = this.usersRepository.findByMail(mail)
+        const isValidPassword = await user.comparePassword(password);
 
-    if (!user) {
-      throw new NotFoundException('User not found')
+        if (!isValidPassword) {
+            throw new UnauthorizedException('User password is wrong');
+        }
+
+        return user;
     }
-
-    const isValidPassword = await user.comparePassword(password)
-
-    if (!isValidPassword) {
-      throw  new UnauthorizedException('User password is wrong')
-    }
-
-    return user
-  }
 }
