@@ -5,7 +5,7 @@ export interface Repository<T extends BaseEntity> {
 
     save(entity: T): Promise<T>;
 
-    update(entity: T): Promise<void>;
+    update(entity: T): Promise<T>;
 
     deleteById(id: T['id']): Promise<void>;
 }

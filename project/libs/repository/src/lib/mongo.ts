@@ -37,10 +37,10 @@ export abstract class MongoRepository<
 
         entity.id = newEntity._id.toString();
 
-        return entity
+        return entity;
     }
 
-    public async update(entity: Entity): Promise<void> {
+    public async update(entity: Entity) {
         const updatedDocument = await this.model
             .findByIdAndUpdate(entity.id, entity.toPOJO(), {
                 new: true,
@@ -53,6 +53,8 @@ export abstract class MongoRepository<
                 `Entity with id ${entity.id} not found`,
             );
         }
+
+        return entity;
     }
 
     public async deleteById(id: Entity['id']): Promise<void> {
