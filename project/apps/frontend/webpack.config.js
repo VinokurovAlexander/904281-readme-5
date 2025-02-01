@@ -10,6 +10,10 @@ module.exports = composePlugins(
         // svgr: false
     }),
     (config) => {
+        config.module.rules.push({
+            test: /\.html$/i,
+            loader: 'html-loader',
+        });
         // Update the webpack config as needed here.
         // e.g. `config.plugins.push(new MyPlugin())`
         return config;
