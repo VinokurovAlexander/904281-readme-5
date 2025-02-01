@@ -1,2 +1,2 @@
-export { MemoryRepository } from './lib/memory-repository';
-export { MongoRepository } from './lib/mongo';
+export { MemoryRepository } from './memory-repository';
+export { MongoRepository } from './mongo';
