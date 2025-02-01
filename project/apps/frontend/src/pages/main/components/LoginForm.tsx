@@ -1,19 +1,29 @@
-import { useState } from 'react';
+import { useState, FC } from 'react';
 import { FormEvent } from 'react';
 import { login } from '../../../api';
+import { useNavigate } from 'react-router-dom';
 
-export const LoginForm = () => {
+interface LoginFormProps {
+    setIsAuth: (isAuth: boolean) => void;
+}
+
+export const LoginForm: FC<LoginFormProps> = ({ setIsAuth }) => {
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
+
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
         login()
             .then((result) => {
-                if (result.statusCode !== 200) {
+                if (result.statusCode === 200) {
+                    setIsAuth(true);
+                    navigate('/popular');
+                } else {
                     setError(result.message);
                 }
             })
-            .catch((e) => console.log('error is', e.message));
+            .catch(() => setError('Something went wrong'));
     };
 
     return (

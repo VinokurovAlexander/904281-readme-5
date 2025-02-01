@@ -1,7 +1,12 @@
+import { FC } from 'react';
 import logoUrl from '../../../markup/img/logo.svg';
 import { LoginForm } from './components/LoginForm';
 
-export const Main = () => {
+interface MainProps {
+    setIsAuth: (isAuth: boolean) => void;
+}
+
+export const Main: FC<MainProps> = ({ setIsAuth }) => {
     return (
         <div>
             <header className="header page__header">
@@ -64,7 +69,7 @@ export const Main = () => {
                     </section>
                     <section className="authorization">
                         <h2 className="visually-hidden">Авторизация</h2>
-                        <LoginForm />
+                        <LoginForm setIsAuth={setIsAuth} />
                     </section>
                 </div>
             </main>
