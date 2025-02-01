@@ -6,28 +6,31 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
-
 import { AppModule } from './app/module';
 
 import { initSpecification } from './specification';
 
-const VERSION = 'v1'
+const VERSION = 'v1';
 const globalPrefix = `api/${VERSION}`;
 
 async function bootstrap() {
-  const port = process.env.PORT || 3000;
+    const port = process.env.PORT || 3000;
 
-  const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix(globalPrefix);
+    app.enableCors({
+        origin: true,
+    });
 
-  initSpecification({ version: VERSION, app})
+    app.setGlobalPrefix(globalPrefix);
 
-  await app.listen(port);
+    initSpecification({ version: VERSION, app });
 
-  Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
-  );
+    await app.listen(port);
+
+    Logger.log(
+        `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`,
+    );
 }
 
 bootstrap();

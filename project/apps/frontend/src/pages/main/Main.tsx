@@ -1,4 +1,7 @@
-export const Login = () => {
+import logoUrl from '../../../markup/img/logo.svg';
+import { LoginForm } from './components/LoginForm';
+
+export const Main = () => {
     return (
         <div>
             <header className="header page__header">
@@ -7,7 +10,7 @@ export const Login = () => {
                         <a className="header__logo-link header__logo-link--active">
                             <img
                                 className="header__logo"
-                                src="../../../../../markup/img/logo.svg"
+                                src={logoUrl}
                                 alt="Логотип readme"
                                 width="172"
                                 height="32"
@@ -61,61 +64,7 @@ export const Login = () => {
                     </section>
                     <section className="authorization">
                         <h2 className="visually-hidden">Авторизация</h2>
-                        <form
-                            className="authorization__form form"
-                            action="#"
-                            method="post"
-                        >
-                            <div className="authorization__input-wrapper form__input-wrapper">
-                                <input
-                                    className="authorization__input authorization__input--login form__input"
-                                    type="text"
-                                    name="login"
-                                    placeholder="Логин"
-                                />
-                                {/*<svg*/}
-                                {/*    className="form__input-icon"*/}
-                                {/*    width="19"*/}
-                                {/*    height="18"*/}
-                                {/*>*/}
-                                {/*    <use xlink:href="#icon-input-user"></use>*/}
-                                {/*</svg>*/}
-                                <label className="visually-hidden">Логин</label>
-                                <span className="form__error-label form__error-label--login">
-                                    Неверный логин
-                                </span>
-                            </div>
-                            <div className="authorization__input-wrapper form__input-wrapper">
-                                <input
-                                    className="authorization__input authorization__input--password form__input"
-                                    type="password"
-                                    name="password"
-                                    placeholder="Пароль"
-                                />
-                                {/*<svg*/}
-                                {/*    className="form__input-icon"*/}
-                                {/*    width="16"*/}
-                                {/*    height="20"*/}
-                                {/*>*/}
-                                {/*    <use xlink:href="#icon-input-password"></use>*/}
-                                {/*</svg>*/}
-                                <label className="visually-hidden">
-                                    Пароль
-                                </label>
-                                <span className="form__error-label">
-                                    Пароли не совпадают
-                                </span>
-                            </div>
-                            <a className="authorization__recovery" href="#">
-                                Восстановить пароль
-                            </a>
-                            <button
-                                className="authorization__submit button button--main"
-                                type="submit"
-                            >
-                                Войти
-                            </button>
-                        </form>
+                        <LoginForm />
                     </section>
                 </div>
             </main>
