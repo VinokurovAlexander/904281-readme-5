@@ -8,13 +8,24 @@ interface LoginFormProps {
 }
 
 export const LoginForm: FC<LoginFormProps> = ({ setIsAuth }) => {
+    const [mail, setMail] = useState('');
+    const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
+
     const navigate = useNavigate();
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
-        login()
+        if (!mail || !password) {
+            setError('No name or password');
+
+            return;
+        }
+
+        setError(null);
+
+        login({ mail, password })
             .then((result) => {
                 if (result.statusCode === 200) {
                     setIsAuth(true);
@@ -35,6 +46,8 @@ export const LoginForm: FC<LoginFormProps> = ({ setIsAuth }) => {
                         type="text"
                         name="login"
                         placeholder="Логин"
+                        onChange={(e) => setMail(e.target.value)}
+                        value={mail}
                     />
                     {/*<svg*/}
                     {/*    className="form__input-icon"*/}
@@ -54,6 +67,8 @@ export const LoginForm: FC<LoginFormProps> = ({ setIsAuth }) => {
                         type="password"
                         name="password"
                         placeholder="Пароль"
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
                     />
                     {/*<svg*/}
                     {/*    className="form__input-icon"*/}
@@ -77,7 +92,11 @@ export const LoginForm: FC<LoginFormProps> = ({ setIsAuth }) => {
                     Войти
                 </button>
             </form>
-            {error && <p>{error}</p>}
+            {error && (
+                <p style={{ color: '#f02323' }}>
+                    <b>{error}</b>
+                </p>
+            )}
         </div>
     );
 };

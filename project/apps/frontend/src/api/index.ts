@@ -7,11 +7,16 @@ interface Response {
     error: string;
 }
 
-export const login = (): Promise<Response> =>
+interface LoginParams {
+    mail: string;
+    password: string;
+}
+
+export const login = ({ mail, password }: LoginParams): Promise<Response> =>
     fetch(baseUrl + '/login', {
         method: 'POST',
         body: JSON.stringify({
-            mail: 'user@notfound.local',
-            password: '123456',
+            mail,
+            password,
         }),
     }).then((response) => response.json());
