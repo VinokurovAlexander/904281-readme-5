@@ -1,12 +1,15 @@
 import { FC } from 'react';
 import logoUrl from '../../../markup/img/logo.svg';
 import { LoginForm } from './components/LoginForm';
+import { useNavigate } from 'react-router-dom';
 
 interface MainProps {
     setIsAuth: (isAuth: boolean) => void;
 }
 
 export const Main: FC<MainProps> = ({ setIsAuth }) => {
+    const navigate = useNavigate();
+
     return (
         <div>
             <header className="header page__header">
@@ -32,7 +35,10 @@ export const Main: FC<MainProps> = ({ setIsAuth }) => {
                             </p>
                             <ul className="header__user-nav">
                                 <li>
-                                    <a className="header__user-button header__register-button button button--transparent">
+                                    <a
+                                        className="header__user-button header__register-button button button--transparent"
+                                        onClick={() => navigate('/signup')}
+                                    >
                                         Регистрация
                                     </a>
                                 </li>

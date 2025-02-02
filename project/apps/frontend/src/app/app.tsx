@@ -1,6 +1,6 @@
 import { FC, ReactNode, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { Main, Popular } from '../pages';
+import { Main, Popular, Signup } from '../pages';
 
 interface ProtectedRouteProps {
     isAuth: boolean;
@@ -22,6 +22,7 @@ export function App() {
         <Routes>
             <Route path="*" element={<h2>404 not found</h2>} />
             <Route path="/" element={<Main setIsAuth={setIsAuth} />} />
+            <Route path="/signup" element={<Signup setIsAuth={setIsAuth} />} />
             <Route
                 path="/popular"
                 element={

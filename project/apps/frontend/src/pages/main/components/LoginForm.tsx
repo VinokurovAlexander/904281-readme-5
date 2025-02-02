@@ -27,11 +27,11 @@ export const LoginForm: FC<LoginFormProps> = ({ setIsAuth }) => {
 
         login({ mail, password })
             .then((result) => {
-                if (result.statusCode === 200) {
+                if (result.statusCode && result.statusCode !== 200) {
+                    setError(result.message);
+                } else {
                     setIsAuth(true);
                     navigate('/popular');
-                } else {
-                    setError(result.message);
                 }
             })
             .catch(() => setError('Something went wrong'));
