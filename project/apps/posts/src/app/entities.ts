@@ -10,7 +10,7 @@ import {
 export class RepostEntity implements StorableEntity<Repost> {
     id: string;
     userId: string;
-    createdAt: string;
+    createdAt: Date;
     postId: string;
 
     constructor(repost: Repost) {
@@ -37,7 +37,7 @@ export class RepostEntity implements StorableEntity<Repost> {
 export class LikeEntity implements StorableEntity<Like> {
     id: string;
     userId: string;
-    createdAt: string;
+    createdAt: Date;
 
     constructor(like: Like) {
         this.populate(like);
@@ -61,7 +61,7 @@ export class LikeEntity implements StorableEntity<Like> {
 export class CommentEntity implements StorableEntity<Comment> {
     id: string;
     text: string;
-    createdAt: string;
+    createdAt: Date;
     userId: string;
 
     constructor(comment: Comment) {
@@ -109,8 +109,8 @@ export class CategoryEntity implements StorableEntity<Category> {
 export class PostEntity implements StorableEntity<Post> {
     id: string;
     userId: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt: Date;
+    updatedAt: Date;
     title: string;
     content: string;
     category: CategoryEntity;

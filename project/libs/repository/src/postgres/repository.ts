@@ -9,17 +9,17 @@ const throwNotImplementedError = (methodName: string) => {
 };
 
 export abstract class BasePostgresRepository<
-    Entity extends BaseEntity & StorableEntity,
+    Entity extends BaseEntity & StorableEntity<BaseEntity>,
     Document,
 > implements Repository<Entity>
 {
     constructor(
-        protected entity: EntityFactory<Entity>,
+        protected entityFactory: EntityFactory<Entity>,
         protected readonly client: PrismaClientService,
     ) {}
 
     protected createEntityFromDocument(document: Document) {
-        return this.entity.create(document);
+        return this.entityFactory.create(document);
     }
 
     public async findById(id: Entity['id']) {
