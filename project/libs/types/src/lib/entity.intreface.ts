@@ -6,6 +6,6 @@ export interface EntityFactory<Entity extends BaseEntity> {
     create(data: any): Entity;
 }
 
-export interface StorableEntity {
-    toPOJO(): any;
+export interface StorableEntity<T> {
+    toPOJO(): T;
 }

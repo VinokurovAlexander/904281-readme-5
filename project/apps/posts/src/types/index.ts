@@ -1,28 +1,29 @@
-interface Category {
+export interface Category {
     id: string;
     title: string;
 }
 
-interface Like {
+export interface Like {
     id: string;
     userId: string;
     createdAt: string;
 }
 
-interface Repost {
+export interface Repost {
     id: string;
     userId: string;
     createdAt: string;
+    postId: string;
 }
 
-interface Comment {
+export interface Comment {
     id: string;
     text: string;
     createdAt: string;
     userId: string;
 }
 
-interface Post {
+export interface Post {
     id: string;
     userId: string;
     createdAt: string;
