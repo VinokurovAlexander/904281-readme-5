@@ -17,6 +17,9 @@ module.exports = composePlugins(
                 AUTH_API_BASE_URL: JSON.stringify(
                     process.env.AUTH_API_BASE_URL,
                 ),
+                POSTS_API_BASE_URL: JSON.stringify(
+                    process.env.POSTS_API_BASE_URL,
+                ),
             }),
         );
 

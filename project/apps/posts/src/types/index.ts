@@ -22,16 +22,3 @@ export interface Comment {
     createdAt: Date;
     userId: string;
 }
-
-export interface Post {
-    id: string;
-    userId: string;
-    createdAt: Date;
-    updatedAt: Date;
-    title: string;
-    content: string;
-    category: Category;
-    comments: Comment[];
-    likes: Like[];
-    reposts: Repost[];
-}

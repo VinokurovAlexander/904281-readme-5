@@ -26,7 +26,7 @@ export function App() {
             <Route
                 path="/popular"
                 element={
-                    <ProtectedRoute isAuth={isAuth}>
+                    <ProtectedRoute isAuth={true}>
                         <Popular />
                     </ProtectedRoute>
                 }
