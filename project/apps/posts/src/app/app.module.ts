@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 
 import { PostRepository } from './repository';
-import { PrismaClientModule } from '../../../../libs/repository/src/postgres/module';
 import { PostController } from './app.controller';
 import { PostService } from './app.service';
 import { PostFactory } from './factories';
+import { PrismaClientModule } from '@project/prisma';
 
 @Module({
     imports: [PrismaClientModule],

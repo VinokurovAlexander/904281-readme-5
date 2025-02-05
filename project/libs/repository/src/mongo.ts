@@ -4,7 +4,7 @@ import { BaseEntity, EntityFactory, StorableEntity } from '@project/types';
 import { NotFoundException } from '@nestjs/common';
 
 export abstract class MongoRepository<
-    Entity extends BaseEntity & StorableEntity,
+    Entity extends BaseEntity & StorableEntity<BaseEntity>,
     Document extends BaseDocument<Entity['id']>,
 > implements Repository<Entity>
 {
