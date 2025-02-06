@@ -1,5 +1,5 @@
 import { StorableEntity } from '@project/types';
-import { Category, Like, Post, Repost, Comment } from '../types';
+import { Category, Like, Post, Repost, Comment } from '@project/types';
 import {
     CategoryFactory,
     CommentFactory,

@@ -4,4 +4,4 @@ export {
     StorableEntity,
 } from './lib/entity.intreface';
 
-export { Post } from './lib/post';
+export { Post, Repost, Comment, Like, Category } from './lib/post';

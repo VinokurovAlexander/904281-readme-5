@@ -1,5 +1,5 @@
 import { Expose, Type } from 'class-transformer';
-import { Category } from '../types';
+import { Category } from '@project/types';
 
 class LikeRdo {
     @Expose()

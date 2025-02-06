@@ -1,3 +1,7 @@
 ### Get All
 GET http://localhost:3001/api/v1/posts
 
+
+### Get One post
+GET http://localhost:3001/api/v1/posts/d6e9110b-31a8-4229-a895-1b3e3b318cb5
+

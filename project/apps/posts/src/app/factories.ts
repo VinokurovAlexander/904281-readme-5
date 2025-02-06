@@ -6,7 +6,7 @@ import {
     PostEntity,
     RepostEntity,
 } from './entities';
-import { Category, Comment, Repost, Like, Post } from '../types';
+import { Category, Comment, Repost, Like, Post } from '@project/types';
 
 export class CategoryFactory implements EntityFactory<CategoryEntity> {
     public create(entityPlainData: Category): CategoryEntity {
