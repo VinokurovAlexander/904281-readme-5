@@ -19,6 +19,6 @@ export class PostController {
     public async show(@Param('id') id: string) {
         const postEntity = await this.postService.getPostById(id);
 
-        return fillDto(PostRdo, postEntity.toPOJO());
+        return { statusCode: 200, data: fillDto(PostRdo, postEntity.toPOJO()) };
     }
 }

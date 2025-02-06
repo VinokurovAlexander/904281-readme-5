@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getPosts } from '../../api';
 import { Post } from '@project/types';
-import iconHeartUrl from './icon-heart.svg';
-import iconCommentUrl from './icon-comment.svg';
+import iconHeartUrl from '../../assets/icon-heart.svg';
+import iconCommentUrl from '../../assets/icon-comment.svg';
 
 export const Posts = () => {
     const [posts, setPosts] = useState<Post[]>([]);
