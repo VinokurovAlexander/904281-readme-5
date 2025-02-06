@@ -1,6 +1,6 @@
 import { FC, ReactNode, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { Main, Popular, Signup } from '../pages';
+import { Detail, Main, Popular, Signup } from '../pages';
 
 interface ProtectedRouteProps {
     isAuth: boolean;
@@ -16,7 +16,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ isAuth, children }) => {
 };
 
 export function App() {
-    const [isAuth, setIsAuth] = useState(false);
+    const [isAuth, setIsAuth] = useState(true);
 
     return (
         <Routes>
@@ -26,8 +26,16 @@ export function App() {
             <Route
                 path="/popular"
                 element={
-                    <ProtectedRoute isAuth={true}>
+                    <ProtectedRoute isAuth={isAuth}>
                         <Popular />
+                    </ProtectedRoute>
+                }
+            />
+            <Route
+                path="/detail/:id"
+                element={
+                    <ProtectedRoute isAuth={isAuth}>
+                        <Detail />
                     </ProtectedRoute>
                 }
             />
