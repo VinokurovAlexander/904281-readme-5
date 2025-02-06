@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getPosts } from '../../api';
 import { Post } from '@project/types';
 import iconHeartUrl from '../../assets/icon-heart.svg';
@@ -19,7 +20,7 @@ export const Posts = () => {
                 <article className="popular__post post post-text" id={post.id}>
                     <header className="post__header">
                         <h2>
-                            <a href="#">{post.title}</a>
+                            <Link to={`/detail/${post.id}`}>{post.title}</Link>
                         </h2>
                     </header>
                     <div className="post__main">
@@ -31,32 +32,32 @@ export const Posts = () => {
                         {/*</div>*/}
                     </div>
                     <footer className="post__footer">
-                        <div className="post__author">
-                            <a
-                                className="post__author-link"
-                                href="#"
-                                title="Автор"
-                            >
-                                <div className="post__avatar-wrapper">
-                                    <img
-                                        className="post__author-avatar"
-                                        src="img/userpic-larisa-small.jpg"
-                                        alt="Аватар пользователя"
-                                    />
-                                </div>
-                                <div className="post__info">
-                                    <b className="post__author-name">
-                                        Лариса Роговая
-                                    </b>
-                                    <time
-                                        className="post__time"
-                                        dateTime="2019-03-30"
-                                    >
-                                        Месяц назад
-                                    </time>
-                                </div>
-                            </a>
-                        </div>
+                        {/*<div className="post__author">*/}
+                        {/*    <a*/}
+                        {/*        className="post__author-link"*/}
+                        {/*        href="#"*/}
+                        {/*        title="Автор"*/}
+                        {/*    >*/}
+                        {/*        <div className="post__avatar-wrapper">*/}
+                        {/*            <img*/}
+                        {/*                className="post__author-avatar"*/}
+                        {/*                src="img/userpic-larisa-small.jpg"*/}
+                        {/*                alt="Аватар пользователя"*/}
+                        {/*            />*/}
+                        {/*        </div>*/}
+                        {/*        <div className="post__info">*/}
+                        {/*            <b className="post__author-name">*/}
+                        {/*                Лариса Роговая*/}
+                        {/*            </b>*/}
+                        {/*            <time*/}
+                        {/*                className="post__time"*/}
+                        {/*                dateTime="2019-03-30"*/}
+                        {/*            >*/}
+                        {/*                Месяц назад*/}
+                        {/*            </time>*/}
+                        {/*        </div>*/}
+                        {/*    </a>*/}
+                        {/*</div>*/}
                         <div className="post__indicators">
                             <div className="post__buttons">
                                 <a

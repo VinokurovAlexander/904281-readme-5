@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Post } from '@project/types';
 import { getPostById } from '../../api';
 import { Layout } from '../../../components';
+import { Comments } from './comments';
 import iconHeartUrl from '../../assets/icon-heart.svg';
 import iconCommentUrl from '../../assets/icon-comment.svg';
 import iconRepostUrl from '../../assets/icon-repost.svg';
@@ -180,108 +181,9 @@ export const Detail = () => {
                                             {/*    </button>*/}
                                             {/*</form>*/}
                                             <div className="comments__list-wrapper">
-                                                <ul className="comments__list">
-                                                    <li className="comments__item user">
-                                                        <div className="comments__avatar">
-                                                            <a
-                                                                className="user__avatar-link"
-                                                                href="#"
-                                                            >
-                                                                <img
-                                                                    className="comments__picture"
-                                                                    src="img/userpic-larisa.jpg"
-                                                                    alt="Аватар пользователя"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                        <div className="comments__info">
-                                                            <div className="comments__name-wrapper">
-                                                                <a
-                                                                    className="comments__user-name"
-                                                                    href="#"
-                                                                >
-                                                                    <span>
-                                                                        Лариса
-                                                                        Роговая
-                                                                    </span>
-                                                                </a>
-                                                                <time
-                                                                    className="comments__time"
-                                                                    dateTime="2019-03-20"
-                                                                >
-                                                                    1 ч назад
-                                                                </time>
-                                                            </div>
-                                                            <p className="comments__text">
-                                                                Красота!!!1!
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                    <li className="comments__item user">
-                                                        <div className="comments__avatar">
-                                                            <a
-                                                                className="user__avatar-link"
-                                                                href="#"
-                                                            >
-                                                                <img
-                                                                    className="comments__picture"
-                                                                    src="img/userpic-larisa.jpg"
-                                                                    alt="Аватар пользователя"
-                                                                />
-                                                            </a>
-                                                        </div>
-                                                        <div className="comments__info">
-                                                            <div className="comments__name-wrapper">
-                                                                <a
-                                                                    className="comments__user-name"
-                                                                    href="#"
-                                                                >
-                                                                    <span>
-                                                                        Лариса
-                                                                        Роговая
-                                                                    </span>
-                                                                </a>
-                                                                <time
-                                                                    className="comments__time"
-                                                                    dateTime="2019-03-18"
-                                                                >
-                                                                    2 дня назад
-                                                                </time>
-                                                            </div>
-                                                            <p className="comments__text">
-                                                                Озеро Байкал –
-                                                                огромное древнее
-                                                                озеро в горах
-                                                                Сибири к северу
-                                                                от монгольской
-                                                                границы. Байкал
-                                                                считается самым
-                                                                глубоким озером
-                                                                в мире. Он
-                                                                окружен сетью
-                                                                пешеходных
-                                                                маршрутов,
-                                                                называемых
-                                                                Большой
-                                                                байкальской
-                                                                тропой. Деревня
-                                                                Листвянка,
-                                                                расположенная на
-                                                                западном берегу
-                                                                озера, –
-                                                                популярная
-                                                                отправная точка
-                                                                для летних
-                                                                экскурсий. Зимой
-                                                                здесь можно
-                                                                кататься на
-                                                                коньках и
-                                                                собачьих
-                                                                упряжках.
-                                                            </p>
-                                                        </div>
-                                                    </li>
-                                                </ul>
+                                                <Comments
+                                                    comments={post.comments}
+                                                />
                                                 {/*<a*/}
                                                 {/*    className="comments__more-link"*/}
                                                 {/*    href="#"*/}
@@ -296,70 +198,70 @@ export const Detail = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="post-details__user user">
-                                        <div className="post-details__user-info user__info">
-                                            <div className="post-details__avatar user__avatar">
-                                                <a
-                                                    className="post-details__avatar-link user__avatar-link"
-                                                    href="#"
-                                                >
-                                                    <img
-                                                        className="post-details__picture user__picture"
-                                                        src="img/userpic-elvira.jpg"
-                                                        alt="Аватар пользователя"
-                                                    />
-                                                </a>
-                                            </div>
-                                            <div className="post-details__name-wrapper user__name-wrapper">
-                                                <a
-                                                    className="post-details__name user__name"
-                                                    href="#"
-                                                >
-                                                    <span>
-                                                        Эльвира Хайпулинова
-                                                    </span>
-                                                </a>
-                                                <time
-                                                    className="post-details__time user__time"
-                                                    dateTime="2014-03-20"
-                                                >
-                                                    5 лет на сайте
-                                                </time>
-                                            </div>
-                                        </div>
-                                        <div className="post-details__rating user__rating">
-                                            <p className="post-details__rating-item user__rating-item user__rating-item--subscribers">
-                                                <span className="post-details__rating-amount user__rating-amount">
-                                                    1856
-                                                </span>
-                                                <span className="post-details__rating-text user__rating-text">
-                                                    подписчиков
-                                                </span>
-                                            </p>
-                                            <p className="post-details__rating-item user__rating-item user__rating-item--publications">
-                                                <span className="post-details__rating-amount user__rating-amount">
-                                                    556
-                                                </span>
-                                                <span className="post-details__rating-text user__rating-text">
-                                                    публикаций
-                                                </span>
-                                            </p>
-                                        </div>
-                                        <div className="post-details__user-buttons user__buttons">
-                                            <button
-                                                className="user__button user__button--subscription button button--main"
-                                                type="button"
-                                            >
-                                                Подписаться
-                                            </button>
-                                            <a
-                                                className="user__button user__button--writing button button--green"
-                                                href="#"
-                                            >
-                                                Сообщение
-                                            </a>
-                                        </div>
-                                    </div>
+                                    {/*<div className="post-details__user user">*/}
+                                    {/*    <div className="post-details__user-info user__info">*/}
+                                    {/*        <div className="post-details__avatar user__avatar">*/}
+                                    {/*            <a*/}
+                                    {/*                className="post-details__avatar-link user__avatar-link"*/}
+                                    {/*                href="#"*/}
+                                    {/*            >*/}
+                                    {/*                <img*/}
+                                    {/*                    className="post-details__picture user__picture"*/}
+                                    {/*                    src="img/userpic-elvira.jpg"*/}
+                                    {/*                    alt="Аватар пользователя"*/}
+                                    {/*                />*/}
+                                    {/*            </a>*/}
+                                    {/*        </div>*/}
+                                    {/*        <div className="post-details__name-wrapper user__name-wrapper">*/}
+                                    {/*            <a*/}
+                                    {/*                className="post-details__name user__name"*/}
+                                    {/*                href="#"*/}
+                                    {/*            >*/}
+                                    {/*                <span>*/}
+                                    {/*                    Эльвира Хайпулинова*/}
+                                    {/*                </span>*/}
+                                    {/*            </a>*/}
+                                    {/*            <time*/}
+                                    {/*                className="post-details__time user__time"*/}
+                                    {/*                dateTime="2014-03-20"*/}
+                                    {/*            >*/}
+                                    {/*                5 лет на сайте*/}
+                                    {/*            </time>*/}
+                                    {/*        </div>*/}
+                                    {/*    </div>*/}
+                                    {/*    <div className="post-details__rating user__rating">*/}
+                                    {/*        <p className="post-details__rating-item user__rating-item user__rating-item--subscribers">*/}
+                                    {/*            <span className="post-details__rating-amount user__rating-amount">*/}
+                                    {/*                1856*/}
+                                    {/*            </span>*/}
+                                    {/*            <span className="post-details__rating-text user__rating-text">*/}
+                                    {/*                подписчиков*/}
+                                    {/*            </span>*/}
+                                    {/*        </p>*/}
+                                    {/*        <p className="post-details__rating-item user__rating-item user__rating-item--publications">*/}
+                                    {/*            <span className="post-details__rating-amount user__rating-amount">*/}
+                                    {/*                556*/}
+                                    {/*            </span>*/}
+                                    {/*            <span className="post-details__rating-text user__rating-text">*/}
+                                    {/*                публикаций*/}
+                                    {/*            </span>*/}
+                                    {/*        </p>*/}
+                                    {/*    </div>*/}
+                                    {/*    <div className="post-details__user-buttons user__buttons">*/}
+                                    {/*        <button*/}
+                                    {/*            className="user__button user__button--subscription button button--main"*/}
+                                    {/*            type="button"*/}
+                                    {/*        >*/}
+                                    {/*            Подписаться*/}
+                                    {/*        </button>*/}
+                                    {/*        <a*/}
+                                    {/*            className="user__button user__button--writing button button--green"*/}
+                                    {/*            href="#"*/}
+                                    {/*        >*/}
+                                    {/*            Сообщение*/}
+                                    {/*        </a>*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
                                 </div>
                             </section>
                         </>
