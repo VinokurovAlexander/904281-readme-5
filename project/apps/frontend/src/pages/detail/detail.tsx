@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Post } from '@project/types';
 import { getPostById } from '../../api';
-import { Layout } from '../../../components';
+import { Layout } from '../../components';
 import { Comments } from './comments';
 import iconHeartUrl from '../../assets/icon-heart.svg';
 import iconCommentUrl from '../../assets/icon-comment.svg';

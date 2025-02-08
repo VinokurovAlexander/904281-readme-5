@@ -1,5 +1,5 @@
 import { Posts } from './posts';
-import { Layout } from '../../../components';
+import { Layout } from '../../components';
 
 export const Popular = () => {
     return (

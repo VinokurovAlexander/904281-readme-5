@@ -18,7 +18,7 @@ export class AuthController {
     public async register(@Body() dto: CreateUserDto) {
         const user = await this.authService.register(dto);
 
-        return fillDto(UserRdo, user.toPOJO());
+        return { statusCode: 200, data: fillDto(UserRdo, user.toPOJO()) };
     }
 
     @ApiResponse({

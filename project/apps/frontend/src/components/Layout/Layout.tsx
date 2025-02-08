@@ -1,6 +1,6 @@
-import logoUrl from '../../markup/img/logo.svg';
+import logoUrl from '../../../markup/img/logo.svg';
 import { ReactNode } from 'react';
-import { selectUser, useAppSelector } from '../../src/store';
+import { selectUser, useAppSelector } from '../../store';
 import { NavLink } from 'react-router-dom';
 
 interface LayoutProps {
@@ -95,62 +95,86 @@ export const Layout = ({ children }: LayoutProps) => {
                                 {/*</li>*/}
                             </ul>
                             <ul className="header__user-nav">
-                                <li className="header__profile">
-                                    <div className="header__profile-link">
-                                        {/*<div className="header__avatar-wrapper">*/}
-                                        {/*    <img*/}
-                                        {/*        className="header__profile-avatar"*/}
-                                        {/*        src="img/userpic-medium.jpg"*/}
-                                        {/*        alt="Аватар профиля"*/}
-                                        {/*    />*/}
+                                {user && (
+                                    <li className="header__profile">
+                                        <div className="header__profile-link">
+                                            <div className="header__avatar-wrapper">
+                                                {user?.photo && (
+                                                    <img
+                                                        className="header__profile-avatar"
+                                                        src={user.photo}
+                                                        alt="Аватар профиля"
+                                                    />
+                                                )}
+                                            </div>
+                                            <div className="header__profile-name">
+                                                <span>
+                                                    {user?.firstname}{' '}
+                                                    {user?.lastname}
+                                                </span>
+                                                {/*<svg className="header__link-arrow" width="10" height="6">*/}
+                                                {/*    <use xlink:href="#icon-arrow-right-ad"></use>*/}
+                                                {/*</svg>*/}
+                                            </div>
+                                        </div>
+                                        {/*<div className="header__tooltip-wrapper">*/}
+                                        {/*    <div className="header__profile-tooltip">*/}
+                                        {/*        <ul className="header__profile-nav">*/}
+                                        {/*            /!*<li className="header__profile-nav-item">*!/*/}
+                                        {/*            /!*    <a*!/*/}
+                                        {/*            /!*        className="header__profile-nav-link"*!/*/}
+                                        {/*            /!*        href="#"*!/*/}
+                                        {/*            /!*    >*!/*/}
+                                        {/*            /!*        <span className="header__profile-nav-text">*!/*/}
+                                        {/*            /!*            Мой профиль*!/*/}
+                                        {/*            /!*        </span>*!/*/}
+                                        {/*            /!*    </a>*!/*/}
+                                        {/*            /!*</li>*!/*/}
+                                        {/*            /!*<li className="header__profile-nav-item">*!/*/}
+                                        {/*            /!*    <a*!/*/}
+                                        {/*            /!*        className="header__profile-nav-link"*!/*/}
+                                        {/*            /!*        href="#"*!/*/}
+                                        {/*            /!*    >*!/*/}
+                                        {/*            /!*        <span className="header__profile-nav-text">*!/*/}
+                                        {/*            /!*            Сообщения*!/*/}
+                                        {/*            /!*            <i className="header__profile-indicator">*!/*/}
+                                        {/*            /!*                2*!/*/}
+                                        {/*            /!*            </i>*!/*/}
+                                        {/*            /!*        </span>*!/*/}
+                                        {/*            /!*    </a>*!/*/}
+                                        {/*            /!*</li>*!/*/}
+                                        {/*            /!*<li className="header__profile-nav-item">*!/*/}
+                                        {/*            /!*    <a*!/*/}
+                                        {/*            /!*        className="header__profile-nav-link"*!/*/}
+                                        {/*            /!*        href="#"*!/*/}
+                                        {/*            /!*    >*!/*/}
+                                        {/*            /!*        <span className="header__profile-nav-text">*!/*/}
+                                        {/*            /!*            Выход*!/*/}
+                                        {/*            /!*        </span>*!/*/}
+                                        {/*            /!*    </a>*!/*/}
+                                        {/*            /!*</li>*!/*/}
+                                        {/*        </ul>*/}
+                                        {/*    </div>*/}
                                         {/*</div>*/}
-                                        <div className="header__profile-name">
-                                            <span>{user?.login}</span>
-                                            {/*<svg className="header__link-arrow" width="10" height="6">*/}
-                                            {/*    <use xlink:href="#icon-arrow-right-ad"></use>*/}
-                                            {/*</svg>*/}
-                                        </div>
-                                    </div>
-                                    <div className="header__tooltip-wrapper">
-                                        <div className="header__profile-tooltip">
-                                            <ul className="header__profile-nav">
-                                                {/*<li className="header__profile-nav-item">*/}
-                                                {/*    <a*/}
-                                                {/*        className="header__profile-nav-link"*/}
-                                                {/*        href="#"*/}
-                                                {/*    >*/}
-                                                {/*        <span className="header__profile-nav-text">*/}
-                                                {/*            Мой профиль*/}
-                                                {/*        </span>*/}
-                                                {/*    </a>*/}
-                                                {/*</li>*/}
-                                                {/*<li className="header__profile-nav-item">*/}
-                                                {/*    <a*/}
-                                                {/*        className="header__profile-nav-link"*/}
-                                                {/*        href="#"*/}
-                                                {/*    >*/}
-                                                {/*        <span className="header__profile-nav-text">*/}
-                                                {/*            Сообщения*/}
-                                                {/*            <i className="header__profile-indicator">*/}
-                                                {/*                2*/}
-                                                {/*            </i>*/}
-                                                {/*        </span>*/}
-                                                {/*    </a>*/}
-                                                {/*</li>*/}
-                                                {/*<li className="header__profile-nav-item">*/}
-                                                {/*    <a*/}
-                                                {/*        className="header__profile-nav-link"*/}
-                                                {/*        href="#"*/}
-                                                {/*    >*/}
-                                                {/*        <span className="header__profile-nav-text">*/}
-                                                {/*            Выход*/}
-                                                {/*        </span>*/}
-                                                {/*    </a>*/}
-                                                {/*</li>*/}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                )}
+                                {!user && (
+                                    <>
+                                        <li className="header__authorization">
+                                            <a
+                                                className="header__user-button header__authorization-button button"
+                                                href="login.html"
+                                            >
+                                                Вход
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a className="header__user-button header__user-button--active header__register-button button">
+                                                Регистрация
+                                            </a>
+                                        </li>
+                                    </>
+                                )}
                                 {/*<li className="header__profile">*/}
                                 {/*    <a*/}
                                 {/*        className="header__profile-link"*/}

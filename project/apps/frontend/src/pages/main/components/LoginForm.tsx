@@ -42,8 +42,8 @@ export const LoginForm = () => {
                     <input
                         className="authorization__input authorization__input--login form__input"
                         type="text"
-                        name="login"
-                        placeholder="Логин"
+                        name="mail"
+                        placeholder="Почтовый адрес"
                         onChange={(e) => setMail(e.target.value)}
                         value={mail}
                     />

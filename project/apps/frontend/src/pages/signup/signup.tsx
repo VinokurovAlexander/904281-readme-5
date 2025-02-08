@@ -2,14 +2,16 @@ import { FormEvent, useState } from 'react';
 import { signup } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, userActions } from '../../store';
+import { Layout } from '../../components';
 
 export const Signup = () => {
     const [mail, setMail] = useState('');
-    const [login, setLogin] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [lastname, setLastname] = useState('');
     const [firstPassword, setFirstPassword] = useState('');
     const [secondPassword, setSecondPassword] = useState('');
 
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string | string[] | null>(null);
 
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -19,7 +21,13 @@ export const Signup = () => {
 
         setError(null);
 
-        if (!mail || !login || !firstPassword || !secondPassword) {
+        if (
+            !mail ||
+            !firstname ||
+            !lastname ||
+            !firstPassword ||
+            !secondPassword
+        ) {
             setError('Не все поля заполнены');
             return;
         }
@@ -29,7 +37,7 @@ export const Signup = () => {
             return;
         }
 
-        signup({ mail, login, password: firstPassword })
+        signup({ mail, firstname, lastname, password: firstPassword })
             .then((result) => {
                 if (result.statusCode === 200) {
                     dispatch(userActions.setUser(result.data));
@@ -42,102 +50,7 @@ export const Signup = () => {
     };
 
     return (
-        <>
-            <header className="header">
-                <div className="header__wrapper container">
-                    <div className="header__logo-wrapper">
-                        <a className="header__logo-link" href="main.html">
-                            <img
-                                className="header__logo"
-                                src="img/logo.svg"
-                                alt="Логотип readme"
-                                width="128"
-                                height="24"
-                            />
-                        </a>
-                        <p className="header__topic">micro blogging</p>
-                    </div>
-                    <form
-                        className="header__search-form form"
-                        action="#"
-                        method="get"
-                    >
-                        <div className="header__search">
-                            <label className="visually-hidden">Поиск</label>
-                            <input
-                                className="header__search-input form__input"
-                                type="search"
-                            />
-                            <button
-                                className="header__search-button button"
-                                type="submit"
-                            >
-                                {/*<svg className="header__search-icon" width="18" height="18">*/}
-                                {/*    <use xlink:href="#icon-search"></use>*/}
-                                {/*</svg>*/}
-                                <span className="visually-hidden">
-                                    Начать поиск
-                                </span>
-                            </button>
-                        </div>
-                    </form>
-                    <div className="header__nav-wrapper">
-                        <nav className="header__nav">
-                            <ul className="header__my-nav">
-                                <li className="header__my-page header__my-page--popular">
-                                    <a
-                                        className="header__page-link"
-                                        href="popular.html"
-                                        title="Популярный контент"
-                                    >
-                                        <span className="visually-hidden">
-                                            Популярный контент
-                                        </span>
-                                    </a>
-                                </li>
-                                <li className="header__my-page header__my-page--feed">
-                                    <a
-                                        className="header__page-link"
-                                        href="feed.html"
-                                        title="Моя лента"
-                                    >
-                                        <span className="visually-hidden">
-                                            Моя лента
-                                        </span>
-                                    </a>
-                                </li>
-                                <li className="header__my-page header__my-page--messages">
-                                    <a
-                                        className="header__page-link"
-                                        href="messages.html"
-                                        title="Личные сообщения"
-                                    >
-                                        <span className="visually-hidden">
-                                            Личные сообщения
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul className="header__user-nav">
-                                <li className="header__authorization">
-                                    <a
-                                        className="header__user-button header__authorization-button button"
-                                        href="login.html"
-                                    >
-                                        Вход
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="header__user-button header__user-button--active header__register-button button">
-                                        Регистрация
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </header>
-
+        <Layout>
             <main className="page__main page__main--registration">
                 <div className="container">
                     <h1 className="page__title page__title--registration">
@@ -198,9 +111,9 @@ export const Signup = () => {
                                 <div className="registration__input-wrapper form__input-wrapper">
                                     <label
                                         className="registration__label form__label"
-                                        htmlFor="registration-login"
+                                        htmlFor="registration-firstname"
                                     >
-                                        Логин{' '}
+                                        Имя{' '}
                                         <span className="form__input-required">
                                             *
                                         </span>
@@ -208,14 +121,57 @@ export const Signup = () => {
                                     <div className="form__input-section">
                                         <input
                                             className="registration__input form__input"
-                                            id="registration-login"
+                                            id="registration-firstname"
                                             type="text"
-                                            name="login"
-                                            placeholder="Укажите логин"
+                                            name="firstname"
+                                            placeholder="Укажите имя"
                                             onChange={(e) =>
-                                                setLogin(e.target.value)
+                                                setFirstname(e.target.value)
                                             }
-                                            value={login}
+                                            value={firstname}
+                                        />
+                                        <button
+                                            className="form__error-button button"
+                                            type="button"
+                                        >
+                                            !
+                                            <span className="visually-hidden">
+                                                Информация об ошибке
+                                            </span>
+                                        </button>
+                                        <div className="form__error-text">
+                                            <h3 className="form__error-title">
+                                                Заголовок сообщения
+                                            </h3>
+                                            <p className="form__error-desc">
+                                                Текст сообщения об ошибке,
+                                                подробно объясняющий, что не
+                                                так.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="registration__input-wrapper form__input-wrapper">
+                                    <label
+                                        className="registration__label form__label"
+                                        htmlFor="registration-lastname"
+                                    >
+                                        Фамилия{' '}
+                                        <span className="form__input-required">
+                                            *
+                                        </span>
+                                    </label>
+                                    <div className="form__input-section">
+                                        <input
+                                            className="registration__input form__input"
+                                            id="registration-lastname"
+                                            type="text"
+                                            name="firstname"
+                                            placeholder="Укажите фамилию"
+                                            onChange={(e) =>
+                                                setLastname(e.target.value)
+                                            }
+                                            value={lastname}
                                         />
                                         <button
                                             className="form__error-button button"
@@ -331,7 +287,12 @@ export const Signup = () => {
                                 <b className="form__invalid-slogan">
                                     Пожалуйста, исправьте следующие ошибки:
                                 </b>
-                                {error && <h3>{error}</h3>}
+                                {error &&
+                                    (typeof error === 'string' ? (
+                                        <h3>{error}</h3>
+                                    ) : (
+                                        error.map((item) => <h3>{item}</h3>)
+                                    ))}
                                 {/*<ul className="form__invalid-list">*/}
                                 {/*    <li className="form__invalid-item">*/}
                                 {/*        Заголовок. Это поле должно быть*/}
@@ -383,114 +344,6 @@ export const Signup = () => {
                     </form>
                 </section>
             </main>
-
-            <footer className="footer">
-                <div className="footer__wrapper">
-                    <div className="footer__container container">
-                        <div className="footer__site-info">
-                            <div className="footer__site-nav">
-                                <ul className="footer__info-pages">
-                                    <li className="footer__info-page">
-                                        <a
-                                            className="footer__page-link"
-                                            href="#"
-                                        >
-                                            О проекте
-                                        </a>
-                                    </li>
-                                    <li className="footer__info-page">
-                                        <a
-                                            className="footer__page-link"
-                                            href="#"
-                                        >
-                                            Реклама
-                                        </a>
-                                    </li>
-                                    <li className="footer__info-page">
-                                        <a
-                                            className="footer__page-link"
-                                            href="#"
-                                        >
-                                            О разработчиках
-                                        </a>
-                                    </li>
-                                    <li className="footer__info-page">
-                                        <a
-                                            className="footer__page-link"
-                                            href="#"
-                                        >
-                                            Работа в Readme
-                                        </a>
-                                    </li>
-                                    <li className="footer__info-page">
-                                        <a
-                                            className="footer__page-link"
-                                            href="#"
-                                        >
-                                            Соглашение пользователя
-                                        </a>
-                                    </li>
-                                    <li className="footer__info-page">
-                                        <a
-                                            className="footer__page-link"
-                                            href="#"
-                                        >
-                                            Политика конфиденциальности
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <p className="footer__license">
-                                При использовании любых материалов с сайта
-                                обязательно указание Readme в качестве
-                                источника. Все авторские и исключительные права
-                                в рамках проекта защищены в соответствии с
-                                положениями 4 части Гражданского Кодекса
-                                Российской Федерации.
-                            </p>
-                        </div>
-                        <div className="footer__my-info">
-                            <ul className="footer__my-pages">
-                                <li className="footer__my-page footer__my-page--feed">
-                                    <a
-                                        className="footer__page-link"
-                                        href="feed.html"
-                                    >
-                                        Моя лента
-                                    </a>
-                                </li>
-                                <li className="footer__my-page footer__my-page--popular">
-                                    <a
-                                        className="footer__page-link"
-                                        href="popular.html"
-                                    >
-                                        Популярный контент
-                                    </a>
-                                </li>
-                                <li className="footer__my-page footer__my-page--messages">
-                                    <a
-                                        className="footer__page-link"
-                                        href="messages.html"
-                                    >
-                                        Личные сообщения
-                                    </a>
-                                </li>
-                            </ul>
-                            <div className="footer__copyright">
-                                <a
-                                    className="footer__copyright-link"
-                                    href="https://htmlacademy.ru"
-                                >
-                                    <span>Разработано HTML Academy</span>
-                                    {/*<svg className="footer__copyright-logo" width="27" height="34">*/}
-                                    {/*    <use xlink:href="#icon-htmlacademy"></use>*/}
-                                    {/*</svg>*/}
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </>
+        </Layout>
     );
 };

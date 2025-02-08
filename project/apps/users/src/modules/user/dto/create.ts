@@ -1,8 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseUser } from '@project/types';
-import {IsEmail, IsNotEmpty} from "class-validator";
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
-type UserDto = Pick<BaseUser, 'mail' | 'login' | 'password' | 'photo'>;
+type UserDto = Pick<
+    BaseUser,
+    'mail' | 'firstname' | 'password' | 'photo' | 'lastname'
+>;
 
 export class CreateUserDto implements UserDto {
     @ApiProperty({
@@ -13,14 +16,6 @@ export class CreateUserDto implements UserDto {
     @IsNotEmpty()
     @IsEmail()
     mail: string;
-
-    @ApiProperty({
-        description: 'User login',
-        example: 'Keks',
-        required: true,
-    })
-    @IsNotEmpty()
-    login: string;
 
     @ApiProperty({
         description: 'User password',
@@ -36,4 +31,20 @@ export class CreateUserDto implements UserDto {
         required: true,
     })
     photo: string;
+
+    @ApiProperty({
+        description: 'User firstname',
+        example: 'Alexander',
+        required: true,
+    })
+    @IsNotEmpty()
+    firstname: string;
+
+    @ApiProperty({
+        description: 'User lastname',
+        example: 'Vinokurov',
+        required: true,
+    })
+    @IsNotEmpty()
+    lastname: string;
 }

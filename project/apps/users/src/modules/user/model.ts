@@ -8,7 +8,10 @@ import { BaseUser } from '@project/types';
 })
 export class UserModel extends Document<string> implements BaseUser {
     @Prop({ required: true })
-    public login: string;
+    public firstname: string;
+
+    @Prop({ required: true })
+    public lastname: string;
 
     @Prop({ required: true })
     public mail: string;

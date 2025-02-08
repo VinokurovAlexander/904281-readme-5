@@ -29,10 +29,11 @@ export const login = ({
 interface SignupParams {
     mail: string;
     password: string;
-    login: string;
+    firstname: string;
+    lastname: string;
 }
 
-export const signup = ({ mail, login, password }: SignupParams) =>
+export const signup = ({ mail, firstname, lastname, password }: SignupParams) =>
     fetch(baseUrl + '/register', {
         method: 'POST',
         headers: {
@@ -40,8 +41,8 @@ export const signup = ({ mail, login, password }: SignupParams) =>
         },
         body: JSON.stringify({
             mail,
-            login,
+            firstname,
+            lastname,
             password,
-            photo: 'some-url',
         }),
     }).then((response) => response.json());

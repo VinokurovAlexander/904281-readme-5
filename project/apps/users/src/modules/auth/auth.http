@@ -4,9 +4,10 @@ Content-Type: application/json
 
 {
     "mail": "user@notfound.local",
-    "login": "Keks",
     "password": "123456",
-    "photo": "some-url"
+    "firstname": "Keks",
+    "lastname": "Keksov",
+    "photo": ""
 }
 
 ### Login
@@ -15,6 +16,6 @@ Content-Type: application/json
 
 {
     "mail": "user@notfound.local",
-    "password": ""
+    "password": "123456"
 }
 
