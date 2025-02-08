@@ -15,6 +15,6 @@ Content-Type: application/json
 
 {
     "mail": "user@notfound.local",
-    "password": "1234561"
+    "password": ""
 }
 
