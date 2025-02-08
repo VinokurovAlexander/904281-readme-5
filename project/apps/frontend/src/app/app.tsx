@@ -16,7 +16,7 @@ const ProtectedRoute: FC<ProtectedRouteProps> = ({ isAuth, children }) => {
 };
 
 export function App() {
-    const [isAuth, setIsAuth] = useState(true);
+    const [isAuth, setIsAuth] = useState(false);
 
     return (
         <Routes>

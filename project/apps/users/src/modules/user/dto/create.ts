@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseUser } from '../user.interface';
+import { BaseUser } from '@project/types';
 
 type UserDto = Pick<BaseUser, 'mail' | 'login' | 'password' | 'photo'>;
 

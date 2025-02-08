@@ -1,4 +1,4 @@
-import { BaseEntity } from '@project/types';
+import { BaseEntity } from './entity.intreface';
 
 type IdType = BaseEntity['id'];
 

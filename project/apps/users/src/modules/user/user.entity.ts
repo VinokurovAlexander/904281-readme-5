@@ -1,13 +1,13 @@
 import { compare, genSalt, hash } from 'bcrypt';
 import { randomUUID } from 'node:crypto';
-import { BaseUser } from './user.interface';
+import { BaseUser } from '@project/types';
 import { CreateUserDto } from './dto';
 import { SALT_ROUNDS } from './constants';
 import { StorableEntity } from '@project/types';
 
 type UserIdType = BaseUser['id'];
 
-export class User implements StorableEntity {
+export class User implements StorableEntity<BaseUser> {
     public id: string;
     public mail: string;
     public login: string;

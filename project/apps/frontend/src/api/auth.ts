@@ -1,19 +1,20 @@
 import { apiPrefix } from './const';
+import { ErrorResponse, SuccessfullyResponse } from './types';
+import { BaseUser } from '@project/types';
 
 export const baseUrl = AUTH_API_BASE_URL + apiPrefix;
-
-interface Response {
-    statusCode: number;
-    message: string;
-    error: string;
-}
 
 interface LoginParams {
     mail: string;
     password: string;
 }
 
-export const login = ({ mail, password }: LoginParams): Promise<Response> =>
+type LoginResponse = ErrorResponse | SuccessfullyResponse<BaseUser>;
+
+export const login = ({
+    mail,
+    password,
+}: LoginParams): Promise<LoginResponse> =>
     fetch(baseUrl + '/login', {
         method: 'POST',
         headers: {
