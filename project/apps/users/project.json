@@ -1,53 +1,68 @@
 {
-  "name": "users",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/users/src",
-  "projectType": "application",
-  "targets": {
-    "build": {
-      "executor": "@nx/webpack:webpack",
-      "outputs": ["{options.outputPath}"],
-      "defaultConfiguration": "production",
-      "options": {
-        "target": "node",
-        "compiler": "tsc",
-        "outputPath": "dist/apps/users",
-        "main": "apps/users/src/main.ts",
-        "tsConfig": "apps/users/tsconfig.app.json",
-        "assets": ["apps/users/src/assets"],
-        "webpackConfig": "apps/users/webpack.config.js"
-      },
-      "configurations": {
-        "development": {},
-        "production": {}
-      }
-    },
-    "serve": {
-      "executor": "@nx/js:node",
-      "defaultConfiguration": "development",
-      "options": {
-        "buildTarget": "users:build"
-      },
-      "configurations": {
-        "development": {
-          "buildTarget": "users:build:development"
+    "name": "users",
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "sourceRoot": "apps/users/src",
+    "projectType": "application",
+    "targets": {
+        "build": {
+            "executor": "@nx/webpack:webpack",
+            "outputs": [
+                "{options.outputPath}"
+            ],
+            "defaultConfiguration": "production",
+            "options": {
+                "target": "node",
+                "compiler": "tsc",
+                "outputPath": "dist/apps/users",
+                "main": "apps/users/src/main.ts",
+                "tsConfig": "apps/users/tsconfig.app.json",
+                "assets": [
+                    "apps/users/src/assets"
+                ],
+                "webpackConfig": "apps/users/webpack.config.js"
+            },
+            "configurations": {
+                "development": {},
+                "production": {}
+            }
         },
-        "production": {
-          "buildTarget": "users:build:production"
+        "serve": {
+            "executor": "@nx/js:node",
+            "defaultConfiguration": "development",
+            "options": {
+                "buildTarget": "users:build"
+            },
+            "configurations": {
+                "development": {
+                    "buildTarget": "users:build:development"
+                },
+                "production": {
+                    "buildTarget": "users:build:production"
+                }
+            }
+        },
+        "lint": {
+            "executor": "@nx/eslint:lint",
+            "outputs": [
+                "{options.outputFile}"
+            ]
+        },
+        "test": {
+            "executor": "@nx/jest:jest",
+            "outputs": [
+                "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+                "jestConfig": "apps/users/jest.config.ts"
+            }
+        },
+        "db:dev": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "docker-compose --file docker-compose.dev.yml --project-name=readme-users up -d",
+                "cwd": "apps/users"
+            }
         }
-      }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "apps/users/jest.config.ts"
-      }
-    }
-  },
-  "tags": []
+    "tags": []
 }
