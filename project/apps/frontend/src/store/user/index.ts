@@ -1,2 +1,2 @@
 export { userReducer, userActions } from './slice';
-export { selectIsUser } from './selectors';
+export { selectUser } from './selectors';

@@ -1,5 +1,5 @@
 export { store } from './store';
 
-export { userActions, selectIsUser } from './user';
+export { userActions, selectUser } from './user';
 
 export { useAppDispatch, useAppSelector } from './store';

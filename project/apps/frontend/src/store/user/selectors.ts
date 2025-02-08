@@ -1,3 +1,3 @@
 import { RootState } from '../types';
 
-export const selectIsUser = (state: RootState) => state.user.data;
+export const selectUser = (state: RootState) => state.user.data;
