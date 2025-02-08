@@ -1,18 +1,16 @@
-import { useState, FC } from 'react';
+import { useState } from 'react';
 import { FormEvent } from 'react';
 import { login } from '../../../api';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, userActions } from '../../../store';
 
-interface LoginFormProps {
-    setIsAuth: (isAuth: boolean) => void;
-}
-
-export const LoginForm: FC<LoginFormProps> = ({ setIsAuth }) => {
+export const LoginForm = () => {
     const [mail, setMail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
@@ -28,7 +26,7 @@ export const LoginForm: FC<LoginFormProps> = ({ setIsAuth }) => {
         login({ mail, password })
             .then((result) => {
                 if (result.statusCode === 200) {
-                    setIsAuth(true);
+                    dispatch(userActions.setUser(result.data));
                     navigate('/popular');
                 } else {
                     setError(result.message);

@@ -1,12 +1,9 @@
-import { FC, FormEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { signup } from '../../api';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, userActions } from '../../store';
 
-interface SignupProps {
-    setIsAuth: (isAuth: boolean) => void;
-}
-
-export const Signup: FC<SignupProps> = ({ setIsAuth }) => {
+export const Signup = () => {
     const [mail, setMail] = useState('');
     const [login, setLogin] = useState('');
     const [firstPassword, setFirstPassword] = useState('');
@@ -15,6 +12,7 @@ export const Signup: FC<SignupProps> = ({ setIsAuth }) => {
     const [error, setError] = useState<string | null>(null);
 
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -33,11 +31,11 @@ export const Signup: FC<SignupProps> = ({ setIsAuth }) => {
 
         signup({ mail, login, password: firstPassword })
             .then((result) => {
-                if (result.statusCode && result.statusCode !== 200) {
-                    setError(result.message);
-                } else {
-                    setIsAuth(true);
+                if (result.statusCode === 200) {
+                    dispatch(userActions.setUser(result.data));
                     navigate('/popular');
+                } else {
+                    setError(result.message);
                 }
             })
             .catch(() => setError('Что-то пошло не так'));
