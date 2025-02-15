@@ -1,2 +1,1 @@
-export { mongoConfig } from './config'
-export { getMongooseOptions } from './getOptions'
+export { getMongooseOptions } from './getOptions';

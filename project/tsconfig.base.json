@@ -16,6 +16,7 @@
         "strict": false,
         "baseUrl": ".",
         "paths": {
+            "@project/config": ["libs/config/src/index.ts"],
             "@project/prisma": ["libs/prisma/src/index.ts"],
             "@project/repository": ["libs/repository/src/index.ts"],
             "@project/types": ["libs/types/src/index.ts"],

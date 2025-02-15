@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-
 import { fileVaultConfig } from './config';
 import { ConfigModule } from '@nestjs/config';
-import { mongoConfig } from '../../../users/src/lib/mongo';
+import { mongoConfig } from '@project/config';
+import { FileUploaderController } from './controller';
+import { FileUploaderService } from './service';
 
 @Module({
     imports: [
@@ -14,7 +13,7 @@ import { mongoConfig } from '../../../users/src/lib/mongo';
             load: [mongoConfig, fileVaultConfig],
         }),
     ],
-    controllers: [],
-    providers: [],
+    controllers: [FileUploaderController],
+    providers: [FileUploaderService],
 })
-export class AppModule {}
+export class FileVaultModule {}

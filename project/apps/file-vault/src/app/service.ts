@@ -1,4 +1,3 @@
-import 'multer';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { fileVaultConfig } from './config';
 import { ConfigType } from '@nestjs/config';
@@ -6,11 +5,11 @@ import { join } from 'node:path';
 import { ensureDir, writeFile } from 'fs-extra';
 
 @Injectable()
-export class Service {
-    private readonly logger = new Logger(Service.name);
+export class FileUploaderService {
+    private readonly logger = new Logger(FileUploaderService.name);
 
     constructor(
-        @Inject(fileVaultConfig)
+        @Inject(fileVaultConfig.KEY)
         private readonly config: ConfigType<typeof fileVaultConfig>,
     ) {}
 
