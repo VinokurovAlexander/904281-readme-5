@@ -1,19 +1,10 @@
 import { Module } from '@nestjs/common';
 
-import { fileVaultConfig } from './config';
-import { ConfigModule } from '@nestjs/config';
-import { mongoConfig } from '@project/config';
-import { FileUploaderController } from './controller';
-import { FileUploaderService } from './service';
+import { FileUploaderModule } from '../modules/file-uploader';
 
 @Module({
-    imports: [
-        ConfigModule.forRoot({
-            cache: true,
-            load: [mongoConfig, fileVaultConfig],
-        }),
-    ],
-    controllers: [FileUploaderController],
-    providers: [FileUploaderService],
+    imports: [FileUploaderModule],
+    controllers: [],
+    providers: [],
 })
-export class FileVaultModule {}
+export class AppModule {}

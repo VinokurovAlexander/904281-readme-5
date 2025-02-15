@@ -6,10 +6,10 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
-import { FileVaultModule } from './app/module';
+import { AppModule } from './app';
 
 async function bootstrap() {
-    const app = await NestFactory.create(FileVaultModule);
+    const app = await NestFactory.create(AppModule);
     const globalPrefix = 'api';
 
     app.setGlobalPrefix(globalPrefix);
