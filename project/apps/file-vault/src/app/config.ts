@@ -1,9 +1,6 @@
 import { registerAs } from '@nestjs/config';
 import { plainToClass } from 'class-transformer';
-import {
-    IsString,
-    validateOrReject,
-} from 'class-validator';
+import { IsString, validateOrReject } from 'class-validator';
 
 class FileVaultConfig {
     @IsString({ message: 'Upload directory is required' })
