@@ -3,8 +3,11 @@ import { ConfigType } from '@nestjs/config';
 import { join } from 'node:path';
 import { ensureDir, writeFile } from 'fs-extra';
 import dayjs from 'dayjs';
+import { randomUUID } from 'node:crypto';
+import { extension } from 'mime-types';
 
 import { fileVaultConfig } from './config';
+import { logger } from 'nx/src/utils/logger';
 
 @Injectable()
 export class FileUploaderService {
@@ -28,8 +31,14 @@ export class FileUploaderService {
     public async saveFile(file: Express.Multer.File): Promise<string> {
         try {
             const uploadDirectoryPath = this.getUploadDirectoryPath();
+            const filename = randomUUID();
+
+            logger.log('mimetype is', file.mimetype);
+
+            const fileExtension = extension(file.mimetype);
+
             const destinationFile = this.getDestinationFilePath(
-                file.originalname,
+                `${filename}.${fileExtension}`,
             );
 
             await ensureDir(uploadDirectoryPath);
