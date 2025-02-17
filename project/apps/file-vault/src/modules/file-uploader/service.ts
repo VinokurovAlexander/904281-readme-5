@@ -7,7 +7,8 @@ import { randomUUID } from 'node:crypto';
 import { extension } from 'mime-types';
 
 import { fileVaultConfig } from './config';
-import { logger } from 'nx/src/utils/logger';
+import { FileUploaderRepository } from './repository';
+import { FileUploaderFactory } from './factory';
 
 @Injectable()
 export class FileUploaderService {
@@ -16,38 +17,52 @@ export class FileUploaderService {
     constructor(
         @Inject(fileVaultConfig.KEY)
         private readonly config: ConfigType<typeof fileVaultConfig>,
+        private readonly fileRepository: FileUploaderRepository,
     ) {}
+
+    private getSubUploadDirectoryPath(): string {
+        const [year, month] = dayjs().format('YYYY MM').split(' ');
+
+        return join(year, month);
+    }
+
+    private getUploadDirectoryPath(): string {
+        return this.config.uploadDir;
+    }
 
     private getDestinationFilePath(filename: string) {
         return join(this.getUploadDirectoryPath(), filename);
     }
 
-    private getUploadDirectoryPath(): string {
-        const [year, month] = dayjs().format('YYYY MM').split(' ');
-
-        return join(this.config.uploadDir, year, month);
-    }
-
-    public async saveFile(file: Express.Multer.File): Promise<string> {
+    private async writeFile(file: Express.Multer.File) {
         try {
             const uploadDirectoryPath = this.getUploadDirectoryPath();
-            const filename = randomUUID();
-
-            logger.log('mimetype is', file.mimetype);
-
+            const subDirectory = this.getSubUploadDirectoryPath();
             const fileExtension = extension(file.mimetype);
+            const filename = `${randomUUID()}.${fileExtension}`;
 
-            const destinationFile = this.getDestinationFilePath(
-                `${filename}.${fileExtension}`,
-            );
+            const path = this.getDestinationFilePath(filename);
 
-            await ensureDir(uploadDirectoryPath);
-            await writeFile(destinationFile, file.buffer);
+            await ensureDir(join(uploadDirectoryPath, subDirectory));
+            await writeFile(path, file.buffer);
 
-            return destinationFile;
+            return { fileExtension, filename, path, subDirectory };
         } catch (error) {
             this.logger.error(`Error while saving file: ${error.message}`);
             throw new Error(`Can't save file`);
         }
+    }
+
+    public async saveFile(file: Express.Multer.File) {
+        const storedFileInfo = await this.writeFile(file);
+
+        const fileEntity = new FileUploaderFactory().create({
+            hashName: storedFileInfo.filename,
+            mimetype: file.mimetype,
+            originalName: file.originalname,
+            path: storedFileInfo.path,
+            size: file.size,
+            subDirectory: storedFileInfo.subDirectory,
+        });
     }
 }

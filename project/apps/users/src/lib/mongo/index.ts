@@ -1,1 +1,0 @@
-export { getMongooseOptions } from './getOptions';

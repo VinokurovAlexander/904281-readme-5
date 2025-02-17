@@ -1,2 +1,3 @@
-export { fillDto } from './lib/fillDto'
-export { getMongoConnectionString } from './lib/getMongoConnectionString'
+export { fillDto } from './fillDto';
+export { getMongoConnectionString } from './getMongoConnectionString';
+export { getMongooseOptions } from './getOptions';
