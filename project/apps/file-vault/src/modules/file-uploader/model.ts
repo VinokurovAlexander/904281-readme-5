@@ -1,4 +1,3 @@
-import { StoredFile } from './types';
 import { Prop, SchemaFactory, Schema } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
@@ -8,7 +7,7 @@ import { Document } from 'mongoose';
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
 })
-export class FileModel extends Document<string> implements StoredFile {
+export class FileModel extends Document<string> {
     @Prop({
         required: true,
     })
@@ -38,15 +37,6 @@ export class FileModel extends Document<string> implements StoredFile {
         required: true,
     })
     public size: number;
-
-    @Prop({
-        required: true,
-    })
-    public id: string;
-
-    public createdAt: Date;
-
-    public updatedAt: Date;
 }
 
 export const FileSchema = SchemaFactory.createForClass(FileModel);

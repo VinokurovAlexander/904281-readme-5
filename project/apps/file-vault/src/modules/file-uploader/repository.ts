@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { MongoRepository } from '@project/repository';
-import { FileWrittenEntity } from './entity';
 import { FileModel } from './model';
 import { FileUploaderFactory } from './factory';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { StoredFileEntity } from './entity';
 
 @Injectable()
 export class FileUploaderRepository extends MongoRepository<
-    FileWrittenEntity,
+    StoredFileEntity,
     FileModel
 > {
     constructor(

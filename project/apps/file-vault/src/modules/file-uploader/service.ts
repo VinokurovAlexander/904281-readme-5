@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { join } from 'node:path';
 import { ensureDir, writeFile } from 'fs-extra';
@@ -8,7 +8,7 @@ import { extension } from 'mime-types';
 
 import { fileVaultConfig } from './config';
 import { FileUploaderRepository } from './repository';
-import { FileUploaderFactory } from './factory';
+import { FileEntity } from './entity';
 
 @Injectable()
 export class FileUploaderService {
@@ -30,8 +30,12 @@ export class FileUploaderService {
         return this.config.uploadDir;
     }
 
-    private getDestinationFilePath(filename: string) {
-        return join(this.getUploadDirectoryPath(), filename);
+    private getDestinationFilePath(filename: string): string {
+        return join(
+            this.getUploadDirectoryPath(),
+            this.getSubUploadDirectoryPath(),
+            filename,
+        );
     }
 
     private async writeFile(file: Express.Multer.File) {
@@ -42,6 +46,8 @@ export class FileUploaderService {
             const filename = `${randomUUID()}.${fileExtension}`;
 
             const path = this.getDestinationFilePath(filename);
+
+            this.logger.log(`path is ${path}`);
 
             await ensureDir(join(uploadDirectoryPath, subDirectory));
             await writeFile(path, file.buffer);
@@ -56,7 +62,7 @@ export class FileUploaderService {
     public async saveFile(file: Express.Multer.File) {
         const storedFileInfo = await this.writeFile(file);
 
-        const fileEntity = new FileUploaderFactory().create({
+        const fileEntity = new FileEntity({
             hashName: storedFileInfo.filename,
             mimetype: file.mimetype,
             originalName: file.originalname,
@@ -64,5 +70,11 @@ export class FileUploaderService {
             size: file.size,
             subDirectory: storedFileInfo.subDirectory,
         });
+
+        return await this.fileRepository.saveEntityWithoutId(fileEntity);
+    }
+
+    public async getFile(id: string) {
+        return await this.fileRepository.findById(id);
     }
 }

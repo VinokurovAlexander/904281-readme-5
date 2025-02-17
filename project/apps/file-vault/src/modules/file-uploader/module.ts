@@ -7,6 +7,10 @@ import { FileUploaderController } from './controller';
 import { FileUploaderService } from './service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { getServeStaticOptions } from './utils';
+import { MongooseModule } from '@nestjs/mongoose';
+import { FileModel, FileSchema } from './model';
+import { FileUploaderRepository } from './repository';
+import { FileUploaderFactory } from './factory';
 
 @Module({
     imports: [
@@ -16,8 +20,15 @@ import { getServeStaticOptions } from './utils';
             isGlobal: true,
         }),
         ServeStaticModule.forRootAsync(getServeStaticOptions()),
+        MongooseModule.forFeature([
+            { name: FileModel.name, schema: FileSchema },
+        ]),
+    ],
+    providers: [
+        FileUploaderService,
+        FileUploaderRepository,
+        FileUploaderFactory,
     ],
     controllers: [FileUploaderController],
-    providers: [FileUploaderService],
 })
 export class FileUploaderModule {}

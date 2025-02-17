@@ -1,11 +1,4 @@
-export interface StoredFileInfo {
-    filename: string;
-    fileExtension: string;
-    subDirectory: string;
-    path: string;
-}
-
-export interface WrittenFile {
+export interface File {
     originalName: string;
     subDirectory: string;
     size: number;
@@ -14,7 +7,7 @@ export interface WrittenFile {
     path: string;
 }
 
-export interface StoredFile extends WrittenFile {
+export interface StoredFile extends File {
     id: string;
     createdAt: Date;
     updatedAt: Date;

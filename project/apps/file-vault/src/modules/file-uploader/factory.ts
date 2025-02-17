@@ -1,10 +1,10 @@
-import { FileWrittenEntity } from './entity';
-import { WrittenFile } from './types';
+import { StoredFileEntity } from './entity';
+import { StoredFile } from './types';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class FileUploaderFactory {
-    public create(entityPlainData: WrittenFile): FileWrittenEntity {
-        return new FileWrittenEntity(entityPlainData);
+    public create(entityPlainData: StoredFile): StoredFileEntity {
+        return new StoredFileEntity(entityPlainData);
     }
 }

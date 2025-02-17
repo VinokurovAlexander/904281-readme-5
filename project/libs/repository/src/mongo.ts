@@ -9,21 +9,21 @@ export abstract class MongoRepository<
 > implements Repository<Entity>
 {
     constructor(
-        protected entity: EntityFactory<Entity>,
+        protected entityFactory: EntityFactory<Entity>,
         protected readonly model: Model<Document>,
     ) {}
 
     protected createEntityFromDocument(document: Document): Entity {
         const plainObject = document.toObject({ versionKey: false });
 
-        return this.entity.create(plainObject);
+        return this.entityFactory.create(plainObject);
     }
 
     public async findById(id: Entity['id']): Promise<Entity | null> {
         const document = await this.model.findById(id).exec();
 
         if (!document) {
-            throw new NotFoundException('User not found');
+            throw new NotFoundException(`Item with ${id} not found`);
         }
 
         return this.createEntityFromDocument(document);
@@ -36,6 +36,14 @@ export abstract class MongoRepository<
         entity.id = newEntity._id.toString();
 
         return entity;
+    }
+
+    public async saveEntityWithoutId(entity): Promise<Entity> {
+        const newEntity = new this.model(entity.toPOJO());
+        const document = await newEntity.save();
+
+        // @ts-expect-error no ideas what the fuck
+        return this.createEntityFromDocument(document);
     }
 
     public async update(entity: Entity) {
