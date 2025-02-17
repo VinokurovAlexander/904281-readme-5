@@ -3,10 +3,11 @@ POST http://localhost:3000/api/v1/register
 Content-Type: application/json
 
 {
-  "mail": "user@notfound.local",
-  "login": "Keks",
-  "password": "123456",
-  "photo": "some-url"
+    "mail": "user@notfound.local",
+    "password": "123456",
+    "firstname": "Keks",
+    "lastname": "Keksov",
+    "photo": ""
 }
 
 ### Login
@@ -14,7 +15,7 @@ POST http://localhost:3000/api/v1/login
 Content-Type: application/json
 
 {
-  "mail": "user@notfound.local",
-  "password": "123456"
+    "mail": "user@notfound.local",
+    "password": "123456"
 }
 

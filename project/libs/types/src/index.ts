@@ -5,3 +5,5 @@ export {
 } from './lib/entity.intreface';
 
 export { Post, Repost, Comment, Like, Category } from './lib/post';
+
+export { BaseUser } from './lib/user';

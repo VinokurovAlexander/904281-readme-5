@@ -7,15 +7,17 @@ import iconCommentUrl from '../../assets/icon-comment.svg';
 
 export const Posts = () => {
     const [posts, setPosts] = useState<Post[]>([]);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         getPosts()
             .then(setPosts)
-            .catch((e) => console.log('something went wrong', e.message));
+            .catch((e) => setError(e.message));
     }, []);
 
     return (
         <>
+            {error && <h2>{error}</h2>}
             {posts.map((post) => (
                 <article className="popular__post post post-text" id={post.id}>
                     <header className="post__header">

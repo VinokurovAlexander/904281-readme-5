@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { BaseUser } from './user.interface';
+import { BaseUser } from '@project/types';
 
 @Schema({
     collection: 'users',
@@ -8,7 +8,10 @@ import { BaseUser } from './user.interface';
 })
 export class UserModel extends Document<string> implements BaseUser {
     @Prop({ required: true })
-    public login: string;
+    public firstname: string;
+
+    @Prop({ required: true })
+    public lastname: string;
 
     @Prop({ required: true })
     public mail: string;

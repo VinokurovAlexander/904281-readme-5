@@ -1,16 +1,17 @@
 import { compare, genSalt, hash } from 'bcrypt';
 import { randomUUID } from 'node:crypto';
-import { BaseUser } from './user.interface';
+import { BaseUser } from '@project/types';
 import { CreateUserDto } from './dto';
 import { SALT_ROUNDS } from './constants';
 import { StorableEntity } from '@project/types';
 
 type UserIdType = BaseUser['id'];
 
-export class User implements StorableEntity {
+export class User implements StorableEntity<BaseUser> {
     public id: string;
     public mail: string;
-    public login: string;
+    public firstname: string;
+    public lastname: string;
     public password: string;
     public registerDate: number;
     public photo: string;
@@ -23,7 +24,8 @@ export class User implements StorableEntity {
 
     public populate(data: CreateUserDto) {
         this.mail = data.mail;
-        this.login = data.login;
+        this.firstname = data.firstname;
+        this.lastname = data.lastname;
         this.password = data.password;
         this.photo = data.photo;
         this.following = [];
@@ -34,7 +36,8 @@ export class User implements StorableEntity {
         return {
             id: this.id,
             mail: this.mail,
-            login: this.login,
+            firstname: this.firstname,
+            lastname: this.lastname,
             password: this.password,
             registerDate: this.registerDate,
             photo: this.photo,

@@ -1,12 +1,13 @@
-import { BaseEntity } from '@project/types';
+import { BaseEntity } from './entity.intreface';
 
 type IdType = BaseEntity['id'];
 
 export interface BaseUser extends BaseEntity {
     mail: string;
-    login: string;
+    firstname: string;
+    lastname: string;
     password: string;
-    photo: string;
+    photo?: string;
     registerDate: number;
     following: IdType[];
     subscribers: IdType[];

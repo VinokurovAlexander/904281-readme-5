@@ -1,19 +1,20 @@
 import { apiPrefix } from './const';
+import { ErrorResponse, SuccessfullyResponse } from './types';
+import { BaseUser } from '@project/types';
 
 export const baseUrl = AUTH_API_BASE_URL + apiPrefix;
-
-interface Response {
-    statusCode: number;
-    message: string;
-    error: string;
-}
 
 interface LoginParams {
     mail: string;
     password: string;
 }
 
-export const login = ({ mail, password }: LoginParams): Promise<Response> =>
+type LoginResponse = ErrorResponse | SuccessfullyResponse<BaseUser>;
+
+export const login = ({
+    mail,
+    password,
+}: LoginParams): Promise<LoginResponse> =>
     fetch(baseUrl + '/login', {
         method: 'POST',
         headers: {
@@ -28,10 +29,11 @@ export const login = ({ mail, password }: LoginParams): Promise<Response> =>
 interface SignupParams {
     mail: string;
     password: string;
-    login: string;
+    firstname: string;
+    lastname: string;
 }
 
-export const signup = ({ mail, login, password }: SignupParams) =>
+export const signup = ({ mail, firstname, lastname, password }: SignupParams) =>
     fetch(baseUrl + '/register', {
         method: 'POST',
         headers: {
@@ -39,8 +41,8 @@ export const signup = ({ mail, login, password }: SignupParams) =>
         },
         body: JSON.stringify({
             mail,
-            login,
+            firstname,
+            lastname,
             password,
-            photo: 'some-url',
         }),
     }).then((response) => response.json());

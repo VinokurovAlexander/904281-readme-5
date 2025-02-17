@@ -1,13 +1,8 @@
-import { FC } from 'react';
 import logoUrl from '../../../markup/img/logo.svg';
 import { LoginForm } from './components/LoginForm';
 import { useNavigate } from 'react-router-dom';
 
-interface MainProps {
-    setIsAuth: (isAuth: boolean) => void;
-}
-
-export const Main: FC<MainProps> = ({ setIsAuth }) => {
+export const Main = () => {
     const navigate = useNavigate();
 
     return (
@@ -75,7 +70,7 @@ export const Main: FC<MainProps> = ({ setIsAuth }) => {
                     </section>
                     <section className="authorization">
                         <h2 className="visually-hidden">Авторизация</h2>
-                        <LoginForm setIsAuth={setIsAuth} />
+                        <LoginForm />
                     </section>
                 </div>
             </main>
