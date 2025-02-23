@@ -2,7 +2,7 @@ import { apiPrefix } from './const';
 import { ErrorResponse, SuccessfullyResponse } from './types';
 import { BaseUser } from '@project/types';
 
-export const baseUrl = AUTH_API_BASE_URL + apiPrefix;
+export const baseUrl = API_BASE_URL + apiPrefix;
 
 interface LoginParams {
     mail: string;

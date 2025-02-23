@@ -14,12 +14,7 @@ module.exports = composePlugins(
     (config) => {
         config.plugins.push(
             new webpack.DefinePlugin({
-                AUTH_API_BASE_URL: JSON.stringify(
-                    process.env.AUTH_API_BASE_URL,
-                ),
-                POSTS_API_BASE_URL: JSON.stringify(
-                    process.env.POSTS_API_BASE_URL,
-                ),
+                API_BASE_URL: JSON.stringify(process.env.API_BASE_URL),
             }),
         );
 
