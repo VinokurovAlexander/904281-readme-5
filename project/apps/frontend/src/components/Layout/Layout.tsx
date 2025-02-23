@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, useState } from 'react';
+import { MouseEvent, ReactNode, useState, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
     AppBar,
@@ -8,6 +8,9 @@ import {
     Avatar,
     Menu,
     MenuItem,
+    Alert,
+    Snackbar,
+    Slide,
 } from '@mui/material';
 import {
     selectUser,
@@ -15,6 +18,7 @@ import {
     useAppSelector,
     userActions,
 } from '../../store';
+import { SlideProps } from '@mui/material/Slide/Slide';
 
 interface LayoutProps {
     children: ReactNode;
@@ -31,12 +35,18 @@ const routes = [
     },
 ];
 
+function SlideTransition(props: SlideProps) {
+    return <Slide {...props} direction="up" />;
+}
+
 export const Layout = ({ children }: LayoutProps) => {
     const dispatch = useAppDispatch();
     const location = useLocation();
     const user = useAppSelector(selectUser);
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
     const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -49,6 +59,16 @@ export const Layout = ({ children }: LayoutProps) => {
     const handleLogout = () => {
         handleMenuClose();
         dispatch(userActions.setUser(null));
+    };
+
+    useEffect(() => {
+        if (user) {
+            setIsSnackbarOpen(true);
+        }
+    }, []);
+
+    const handleSnackbarClose = () => {
+        setIsSnackbarOpen(false);
     };
 
     return (
@@ -112,7 +132,35 @@ export const Layout = ({ children }: LayoutProps) => {
                     </Menu>
                 </Toolbar>
             </AppBar>
+
             {children}
+
+            <Snackbar
+                open={isSnackbarOpen}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+                TransitionComponent={SlideTransition}
+            >
+                <Alert
+                    onClose={handleSnackbarClose}
+                    severity="success"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                >
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                        }}
+                    >
+                        <Typography>
+                            {`${user?.firstname} ${user?.lastname}, вы успешно авторизовались!`}
+                        </Typography>
+                    </div>
+                </Alert>
+            </Snackbar>
         </>
     );
 };
