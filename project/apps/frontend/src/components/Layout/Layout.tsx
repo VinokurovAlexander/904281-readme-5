@@ -1,7 +1,20 @@
-import { ReactNode } from 'react';
+import { MouseEvent, ReactNode, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { AppBar, Toolbar, Button, Typography, Avatar } from '@mui/material';
-import { selectUser, useAppSelector } from '../../store';
+import {
+    AppBar,
+    Toolbar,
+    Button,
+    Typography,
+    Avatar,
+    Menu,
+    MenuItem,
+} from '@mui/material';
+import {
+    selectUser,
+    useAppDispatch,
+    useAppSelector,
+    userActions,
+} from '../../store';
 
 interface LayoutProps {
     children: ReactNode;
@@ -19,8 +32,24 @@ const routes = [
 ];
 
 export const Layout = ({ children }: LayoutProps) => {
-    const user = useAppSelector(selectUser);
+    const dispatch = useAppDispatch();
     const location = useLocation();
+    const user = useAppSelector(selectUser);
+
+    const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+
+    const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+        handleMenuClose();
+        dispatch(userActions.setUser(null));
+    };
 
     return (
         <>
@@ -40,7 +69,16 @@ export const Layout = ({ children }: LayoutProps) => {
                             </Button>
                         ))}
                     {user && (
-                        <>
+                        <Button
+                            color="inherit"
+                            onClick={handleMenuOpen}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                textTransform: 'none',
+                                gap: 1,
+                            }}
+                        >
                             <Avatar
                                 alt={`${user.firstname} ${user.lastname}`}
                                 src={user.photo}
@@ -53,8 +91,25 @@ export const Layout = ({ children }: LayoutProps) => {
                             >
                                 {`${user.firstname} ${user.lastname}`}
                             </Typography>
-                        </>
+                        </Button>
                     )}
+
+                    <Menu
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleMenuClose}
+                        slotProps={{
+                            paper: {
+                                style: {
+                                    width: anchorEl
+                                        ? anchorEl.offsetWidth
+                                        : 'auto',
+                                },
+                            },
+                        }}
+                    >
+                        <MenuItem onClick={handleLogout}>Выйти</MenuItem>
+                    </Menu>
                 </Toolbar>
             </AppBar>
             {children}
