@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { AppBar, Toolbar, Button } from '@mui/material';
+import { AppBar, Toolbar, Button, Typography, Avatar } from '@mui/material';
 import { selectUser, useAppSelector } from '../../store';
 
 interface LayoutProps {
@@ -39,6 +39,22 @@ export const Layout = ({ children }: LayoutProps) => {
                                 {route.text}
                             </Button>
                         ))}
+                    {user && (
+                        <>
+                            <Avatar
+                                alt={`${user.firstname} ${user.lastname}`}
+                                src={user.photo}
+                            />
+
+                            <Typography
+                                variant="h6"
+                                component="div"
+                                sx={{ ml: 2 }}
+                            >
+                                {`${user.firstname} ${user.lastname}`}
+                            </Typography>
+                        </>
+                    )}
                 </Toolbar>
             </AppBar>
             {children}
