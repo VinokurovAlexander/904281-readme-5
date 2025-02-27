@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { mongoConfig } from '@project/config';
+import { jwtConfig } from '../jwt';
 
 @Module({
     imports: [
@@ -8,7 +9,7 @@ import { mongoConfig } from '@project/config';
             isGlobal: true,
             cache: true,
             envFilePath: 'apps/users/.env',
-            load: [mongoConfig],
+            load: [mongoConfig, jwtConfig],
         }),
     ],
 })

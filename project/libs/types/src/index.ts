@@ -6,4 +6,4 @@ export {
 
 export { Post, Repost, Comment, Like, Category } from './lib/post';
 
-export { BaseUser } from './lib/user';
+export { BaseUser, User } from './lib/user';

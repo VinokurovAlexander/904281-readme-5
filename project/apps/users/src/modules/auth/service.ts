@@ -1,16 +1,23 @@
 import {
     ConflictException,
+    HttpException,
+    HttpStatus,
     Injectable,
     NotFoundException,
     UnauthorizedException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto, LoginUserDto } from '../user/dto';
 import { UsersRepository } from '../user/repository';
 import { User } from '../user/user.entity';
+import { AccessTokenPayload } from '../../types';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly usersRepository: UsersRepository) {}
+    constructor(
+        private readonly usersRepository: UsersRepository,
+        private readonly jwtService: JwtService,
+    ) {}
 
     public async register(dto: CreateUserDto) {
         const { mail } = dto;
@@ -40,5 +47,21 @@ export class AuthService {
         }
 
         return user;
+    }
+
+    public async createUserToken(user: User): Promise<string> {
+        const payload: AccessTokenPayload = {
+            id: user.id,
+            mail: user.mail,
+        };
+
+        try {
+            return await this.jwtService.signAsync(payload);
+        } catch (error) {
+            throw new HttpException(
+                'Ошибка при создании токена.',
+                HttpStatus.INTERNAL_SERVER_ERROR,
+            );
+        }
     }
 }

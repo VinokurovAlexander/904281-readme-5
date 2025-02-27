@@ -12,3 +12,7 @@ export interface BaseUser extends BaseEntity {
     following: IdType[];
     subscribers: IdType[];
 }
+
+export interface User extends BaseUser {
+    id: string;
+}
