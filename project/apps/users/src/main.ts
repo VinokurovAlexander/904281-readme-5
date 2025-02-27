@@ -9,6 +9,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/module';
 
 import { initSpecification } from './specification';
+import cookieParser from 'cookie-parser';
 
 const VERSION = 'v1';
 const globalPrefix = `api/${VERSION}`;
@@ -20,11 +21,14 @@ async function bootstrap() {
 
     app.enableCors({
         origin: true,
+        credentials: true,
     });
 
     app.setGlobalPrefix(globalPrefix);
 
     app.useGlobalPipes(new ValidationPipe());
+
+    app.use(cookieParser());
 
     initSpecification({ version: VERSION, app });
 

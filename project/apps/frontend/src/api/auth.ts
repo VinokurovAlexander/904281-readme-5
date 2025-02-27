@@ -1,6 +1,6 @@
 import { apiPrefix } from './const';
 import { ErrorResponse, SuccessfullyResponse } from './types';
-import { BaseUser } from '@project/types';
+import { User } from '@project/types';
 
 export const baseUrl = API_BASE_URL + apiPrefix;
 
@@ -9,7 +9,7 @@ interface LoginParams {
     password: string;
 }
 
-type LoginResponse = ErrorResponse | SuccessfullyResponse<BaseUser>;
+type LoginResponse = ErrorResponse | SuccessfullyResponse<User>;
 
 export const login = ({
     mail,
@@ -24,6 +24,7 @@ export const login = ({
             mail,
             password,
         }),
+        credentials: 'include',
     }).then((response) => response.json());
 
 interface SignupParams {
@@ -46,3 +47,8 @@ export const signup = ({ mail, firstname, lastname, password }: SignupParams) =>
             password,
         }),
     }).then((response) => response.json());
+
+export const checkAuth = (): Promise<LoginResponse> =>
+    fetch(baseUrl + '/check', { method: 'GET', credentials: 'include' }).then(
+        (response) => response.json(),
+    );

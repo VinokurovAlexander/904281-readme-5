@@ -62,10 +62,11 @@ export const Layout = ({ children }: LayoutProps) => {
     };
 
     useEffect(() => {
+        // TODO trigger only after auth
         if (user) {
             setIsSnackbarOpen(true);
         }
-    }, []);
+    }, [user]);
 
     const handleSnackbarClose = () => {
         setIsSnackbarOpen(false);

@@ -1,9 +1,19 @@
-import { Controller, Post, Body, HttpStatus } from '@nestjs/common';
+import {
+    Controller,
+    Post,
+    Body,
+    HttpStatus,
+    Res,
+    Req,
+    Get,
+    Logger,
+} from '@nestjs/common';
 import { fillDto } from '@project/utils';
 import { UserRdo } from '../user/rdo';
 import { CreateUserDto, LoginUserDto } from '../user/dto';
 import { AuthService } from './service';
 import { ApiResponse } from '@nestjs/swagger';
+import { Response, Request } from 'express';
 
 @Controller('/')
 export class AuthController {
@@ -15,10 +25,22 @@ export class AuthController {
         description: 'The new user has been successfully created.',
     })
     @Post('register')
-    public async register(@Body() dto: CreateUserDto) {
+    public async register(@Body() dto: CreateUserDto, @Res() res: Response) {
         const user = await this.authService.register(dto);
+        const accessToken = await this.authService.createUserToken(user);
 
-        return { statusCode: 200, data: fillDto(UserRdo, user.toPOJO()) };
+        res.cookie('access_token', accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            //sync with env
+            maxAge: 1000 * 60 * 5,
+        });
+
+        return res.send({
+            statusCode: 200,
+            data: fillDto(UserRdo, user.toPOJO()),
+        });
     }
 
     @ApiResponse({
@@ -37,7 +59,24 @@ export class AuthController {
     @Post('login')
     public async login(@Body() dto: LoginUserDto) {
         const user = await this.authService.verifyUser(dto);
+        const accessToken = await this.authService.createUserToken(user);
 
-        return { statusCode: 200, data: fillDto(UserRdo, user.toPOJO()) };
+        return {
+            statusCode: 200,
+            data: fillDto(UserRdo, user.toPOJO()),
+            accessToken,
+        };
+    }
+
+    @Get('check')
+    public async check(@Req() req: Request) {
+        const token = req.cookies['access_token'];
+
+        const user = await this.authService.checkAuth(token);
+
+        return {
+            statusCode: 200,
+            data: fillDto(UserRdo, user.toPOJO()),
+        };
     }
 }

@@ -8,6 +8,7 @@ import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app/app.module';
 import { RequestIdInterceptor } from './interceptors';
+import cookieParser from 'cookie-parser';
 
 const VERSION = 'v1';
 const globalPrefix = `api/${VERSION}`;
@@ -17,9 +18,11 @@ async function bootstrap() {
 
     app.setGlobalPrefix(globalPrefix);
     app.useGlobalInterceptors(new RequestIdInterceptor());
+    app.use(cookieParser());
 
     app.enableCors({
         origin: true,
+        credentials: true,
     });
 
     const port = process.env.PORT || 3000;

@@ -29,7 +29,7 @@ export const Login = () => {
             .then((result) => {
                 if (result.statusCode === 200) {
                     dispatch(userActions.setUser(result.data));
-                    navigate('/popular');
+                    navigate('/');
                 } else {
                     setError(result.message);
                 }

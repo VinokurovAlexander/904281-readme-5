@@ -3,6 +3,7 @@ import {
     HttpException,
     HttpStatus,
     Injectable,
+    Logger,
     NotFoundException,
     UnauthorizedException,
 } from '@nestjs/common';
@@ -51,7 +52,6 @@ export class AuthService {
 
     public async createUserToken(user: User): Promise<string> {
         const payload: AccessTokenPayload = {
-            id: user.id,
             mail: user.mail,
         };
 
@@ -63,5 +63,33 @@ export class AuthService {
                 HttpStatus.INTERNAL_SERVER_ERROR,
             );
         }
+    }
+
+    public async checkAuth(token?: string) {
+        if (!token) {
+            throw new UnauthorizedException('access cookie not found');
+        }
+
+        let payload: AccessTokenPayload;
+
+        try {
+            payload = await this.jwtService.verifyAsync<AccessTokenPayload>(
+                token,
+            );
+        } catch (error) {
+            throw new UnauthorizedException('access not valid');
+        }
+
+        Logger.log('token payload', payload);
+
+        const user = await this.usersRepository.findByMail(payload.mail);
+
+        if (!user) {
+            throw new UnauthorizedException(
+                `User with mail ${payload.mail} not found`,
+            );
+        }
+
+        return user;
     }
 }
