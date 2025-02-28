@@ -13,7 +13,9 @@ import {
     Slide,
 } from '@mui/material';
 import {
+    selectIsShowSnackbar,
     selectUser,
+    snackbarActions,
     useAppDispatch,
     useAppSelector,
     userActions,
@@ -43,10 +45,9 @@ export const Layout = ({ children }: LayoutProps) => {
     const dispatch = useAppDispatch();
     const location = useLocation();
     const user = useAppSelector(selectUser);
+    const isShowSnackbar = useAppSelector(selectIsShowSnackbar);
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-
-    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
     const handleMenuOpen = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -61,16 +62,8 @@ export const Layout = ({ children }: LayoutProps) => {
         dispatch(userActions.setUser(null));
     };
 
-    useEffect(() => {
-        // TODO trigger only after auth
-
-        if (user) {
-            setIsSnackbarOpen(true);
-        }
-    }, [user]);
-
     const handleSnackbarClose = () => {
-        setIsSnackbarOpen(false);
+        dispatch(snackbarActions.setShow(false));
     };
 
     return (
@@ -138,7 +131,7 @@ export const Layout = ({ children }: LayoutProps) => {
             {children}
 
             <Snackbar
-                open={isSnackbarOpen}
+                open={isShowSnackbar}
                 autoHideDuration={6000}
                 onClose={handleSnackbarClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
