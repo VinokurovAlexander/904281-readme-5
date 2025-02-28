@@ -63,6 +63,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
     useEffect(() => {
         // TODO trigger only after auth
+
         if (user) {
             setIsSnackbarOpen(true);
         }
