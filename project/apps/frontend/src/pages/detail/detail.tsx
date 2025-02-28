@@ -56,7 +56,7 @@ export const Detail = () => {
                             <Typography
                                 variant="body1"
                                 color="text.secondary"
-                                paragraph
+                                sx={{ minHeight: '150px', mb: 2 }}
                             >
                                 {post.content}
                             </Typography>
