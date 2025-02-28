@@ -1,0 +1,1 @@
+export { getUsersIdFromPostComments } from './getUsersIdFromPostComments';

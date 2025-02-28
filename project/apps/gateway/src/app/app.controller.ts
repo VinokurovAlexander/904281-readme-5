@@ -14,11 +14,16 @@ import { AppServiceURL } from './config';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { AxiosExceptionFilter } from '../filters';
 import { Response } from 'express';
+import { AppService } from './app.service';
+import { getUsersIdFromPostComments } from '../utils';
 
 @Controller()
 @UseFilters(AxiosExceptionFilter)
 export class AppController {
-    constructor(private readonly httpService: HttpService) {}
+    constructor(
+        private readonly httpService: HttpService,
+        private readonly appService: AppService,
+    ) {}
 
     @Post('login')
     public async login(
@@ -64,11 +69,13 @@ export class AppController {
 
     @Get('posts')
     public async getPosts() {
-        const { data } = await this.httpService.axiosRef.get(
+        const { data: response } = await this.httpService.axiosRef.get(
             `${AppServiceURL.Posts}`,
         );
 
-        return data;
+        const userIds = getUsersIdFromPostComments(response.data);
+
+        return response;
     }
 
     @Get('posts/:id')
