@@ -6,7 +6,7 @@ import { BaseUser } from '@project/types';
     collection: 'users',
     timestamps: true,
 })
-export class UserModel extends Document<string> implements BaseUser {
+export class UserModel extends Document<string> {
     @Prop({ required: true })
     public firstname: string;
 
@@ -30,9 +30,6 @@ export class UserModel extends Document<string> implements BaseUser {
 
     @Prop()
     public subscribers: string[];
-
-    @Prop({ required: true })
-    public id: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);
