@@ -1,1 +1,4 @@
-export { getUsersIdFromPostComments } from './getUsersIdFromPostComments';
+export {
+    getUsersIdFromPostComments,
+    mergePostCommentsWithUsers,
+} from './posts';

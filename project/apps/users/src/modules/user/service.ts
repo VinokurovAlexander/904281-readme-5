@@ -1,11 +1,11 @@
 import { UsersRepository } from './repository';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
 @Injectable()
 export class UsersService {
     constructor(private readonly usersRepository: UsersRepository) {}
 
     public async getUsersByIds(ids: string[]) {
-        return this.usersRepository.findManyById(ids);
+        return await this.usersRepository.findManyById(ids);
     }
 }

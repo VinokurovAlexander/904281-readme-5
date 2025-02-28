@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus } from '@nestjs/common';
 import { UsersService } from './service';
 import { GetUsersDto } from './dto';
 
@@ -8,6 +8,8 @@ export class UsersController {
 
     @Post('get-by-ids')
     async getUsersByIds(@Body() body: GetUsersDto) {
-        return this.usersService.getUsersByIds(body.ids);
+        const users = await this.usersService.getUsersByIds(body.ids);
+
+        return { status: HttpStatus.OK, data: users };
     }
 }

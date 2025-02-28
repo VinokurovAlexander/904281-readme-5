@@ -76,7 +76,7 @@ export const Detail = () => {
                                         sx={{ mr: 1, color: 'red' }}
                                     />
                                     <Typography variant="body2">
-                                        {post.likes.length} лайков
+                                        {post.likes.length}
                                     </Typography>
                                 </Box>
                                 <Box
@@ -89,7 +89,7 @@ export const Detail = () => {
                                         sx={{ mr: 1, color: 'primary.main' }}
                                     />
                                     <Typography variant="body2">
-                                        {post.comments.length} комментариев
+                                        {post.comments.length}
                                     </Typography>
                                 </Box>
                                 <Box
@@ -102,7 +102,7 @@ export const Detail = () => {
                                         sx={{ mr: 1, color: 'green' }}
                                     />
                                     <Typography variant="body2">
-                                        {post.reposts.length} репостов
+                                        {post.reposts.length}
                                     </Typography>
                                 </Box>
                             </Box>
@@ -117,16 +117,18 @@ export const Detail = () => {
                                         key={comment.id}
                                         alignItems="flex-start"
                                     >
-                                        {/*<Avatar*/}
-                                        {/*    sx={{*/}
-                                        {/*        bgcolor: 'primary.main',*/}
-                                        {/*        mr: 2,*/}
-                                        {/*    }}*/}
-                                        {/*>*/}
-                                        {/*    {comment.userId[0]}*/}
-                                        {/*</Avatar>*/}
+                                        <Avatar
+                                            sx={{
+                                                bgcolor: 'primary.main',
+                                                mr: 2,
+                                            }}
+                                            //@ts-expect-error
+                                            src={comment.user.photo}
+                                        />
+
                                         <ListItemText
-                                            // primary={comment.userId}
+                                            //@ts-expect-error
+                                            primary={`${comment.user.firstname} ${comment.user.lastname}`}
                                             secondary={
                                                 <>
                                                     <Typography
