@@ -1,2 +1,2 @@
-export { login, signup } from './auth';
+export { login, signup, checkAuth } from './auth';
 export { getPosts, getPostById } from './posts';

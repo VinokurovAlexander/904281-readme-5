@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { userReducer } from './user';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from './types';
+import { snackbarReducer } from './snackbar';
 
 export const store = configureStore({
     reducer: {
         user: userReducer,
+        snackbar: snackbarReducer,
     },
 });
 

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { TextField, Button, Box, Container, Alert } from '@mui/material';
 import { FormEvent, useState } from 'react';
 import { Layout, Password } from '../../components';
-import { useAppDispatch, userActions } from '../../store';
+import { snackbarActions, useAppDispatch, userActions } from '../../store';
 import { login } from '../../api';
 
 export const Login = () => {
@@ -29,7 +29,8 @@ export const Login = () => {
             .then((result) => {
                 if (result.statusCode === 200) {
                     dispatch(userActions.setUser(result.data));
-                    navigate('/popular');
+                    dispatch(snackbarActions.setShow(true));
+                    navigate('/');
                 } else {
                     setError(result.message);
                 }

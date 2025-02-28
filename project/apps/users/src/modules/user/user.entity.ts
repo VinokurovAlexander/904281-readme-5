@@ -8,6 +8,7 @@ import { StorableEntity } from '@project/types';
 type UserIdType = BaseUser['id'];
 
 export class User implements StorableEntity<BaseUser> {
+    //TODO id тут недоступен
     public id: string;
     public mail: string;
     public firstname: string;
