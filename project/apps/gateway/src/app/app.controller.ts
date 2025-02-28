@@ -7,6 +7,7 @@ import {
     Logger,
     Res,
     Req,
+    Param,
 } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { AppServiceURL } from './config';
@@ -65,6 +66,15 @@ export class AppController {
     public async getPosts() {
         const { data } = await this.httpService.axiosRef.get(
             `${AppServiceURL.Posts}`,
+        );
+
+        return data;
+    }
+
+    @Get('posts/:id')
+    public async getPost(@Param('id') id: string) {
+        const { data } = await this.httpService.axiosRef.get(
+            `${AppServiceURL.Posts}/${id}`,
         );
 
         return data;

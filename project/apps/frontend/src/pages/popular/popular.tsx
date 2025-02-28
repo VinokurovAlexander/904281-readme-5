@@ -12,6 +12,7 @@ import { Layout } from '../../components';
 import { useEffect, useState } from 'react';
 import { Post } from '@project/types';
 import { getPosts } from '../../api';
+import { Link } from 'react-router-dom';
 
 export const Popular = () => {
     const [posts, setPosts] = useState<Post[]>([]);
@@ -68,46 +69,55 @@ export const Popular = () => {
                     }}
                 >
                     {posts.map((post) => (
-                        <Card key={post.id}>
-                            <CardContent>
-                                <Typography
-                                    variant="h5"
-                                    component="div"
-                                    sx={{ mb: 2 }}
-                                >
-                                    {post.title}
-                                </Typography>
+                        <Link
+                            to={`/detail/${post.id}`}
+                            style={{ textDecoration: 'none' }}
+                            key={post.id}
+                        >
+                            <Card>
+                                <CardContent>
+                                    <Typography
+                                        variant="h5"
+                                        component="div"
+                                        sx={{ mb: 2 }}
+                                    >
+                                        {post.title}
+                                    </Typography>
 
-                                <Typography
-                                    variant="body1"
-                                    color="text.secondary"
-                                    sx={{ mb: 2 }}
-                                >
-                                    {post.content}
-                                </Typography>
+                                    <Typography
+                                        variant="body1"
+                                        color="text.secondary"
+                                        sx={{ mb: 2 }}
+                                    >
+                                        {post.content}
+                                    </Typography>
 
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                    }}
-                                >
-                                    <IconButton aria-label="likes" disabled>
-                                        <FavoriteIcon sx={{ mr: 1 }} />
-                                        <Typography variant="body2">
-                                            {post.likes.length}
-                                        </Typography>
-                                    </IconButton>
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <IconButton aria-label="likes" disabled>
+                                            <FavoriteIcon sx={{ mr: 1 }} />
+                                            <Typography variant="body2">
+                                                {post.likes.length}
+                                            </Typography>
+                                        </IconButton>
 
-                                    <IconButton aria-label="comments" disabled>
-                                        <CommentIcon sx={{ mr: 1 }} />
-                                        <Typography variant="body2">
-                                            {post.comments.length}
-                                        </Typography>
-                                    </IconButton>
-                                </Box>
-                            </CardContent>
-                        </Card>
+                                        <IconButton
+                                            aria-label="comments"
+                                            disabled
+                                        >
+                                            <CommentIcon sx={{ mr: 1 }} />
+                                            <Typography variant="body2">
+                                                {post.comments.length}
+                                            </Typography>
+                                        </IconButton>
+                                    </Box>
+                                </CardContent>
+                            </Card>
+                        </Link>
                     ))}
                 </Box>
             </Container>
