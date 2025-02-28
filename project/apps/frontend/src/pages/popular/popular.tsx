@@ -98,12 +98,12 @@ export const Popular = () => {
                                             alignItems: 'center',
                                         }}
                                     >
-                                        <IconButton aria-label="likes" disabled>
-                                            <FavoriteIcon sx={{ mr: 1 }} />
-                                            <Typography variant="body2">
-                                                {post.likes.length}
-                                            </Typography>
-                                        </IconButton>
+                                        {/*<IconButton aria-label="likes" disabled>*/}
+                                        {/*    <FavoriteIcon sx={{ mr: 1 }} />*/}
+                                        {/*    <Typography variant="body2">*/}
+                                        {/*        {post.likes.length}*/}
+                                        {/*    </Typography>*/}
+                                        {/*</IconButton>*/}
 
                                         <IconButton
                                             aria-label="comments"

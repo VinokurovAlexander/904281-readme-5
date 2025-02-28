@@ -1,4 +1,4 @@
-import { MouseEvent, ReactNode, useState, useEffect } from 'react';
+import { MouseEvent, ReactNode, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
     AppBar,

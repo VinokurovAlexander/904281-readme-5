@@ -66,19 +66,19 @@ export const Detail = () => {
 
                             {/* Лайки, комментарии, репосты */}
                             <Box sx={{ display: 'flex', gap: 3, mb: 3 }}>
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                    }}
-                                >
-                                    <FavoriteIcon
-                                        sx={{ mr: 1, color: 'red' }}
-                                    />
-                                    <Typography variant="body2">
-                                        {post.likes.length}
-                                    </Typography>
-                                </Box>
+                                {/*<Box*/}
+                                {/*    sx={{*/}
+                                {/*        display: 'flex',*/}
+                                {/*        alignItems: 'center',*/}
+                                {/*    }}*/}
+                                {/*>*/}
+                                {/*    <FavoriteIcon*/}
+                                {/*        sx={{ mr: 1, color: 'red' }}*/}
+                                {/*    />*/}
+                                {/*    <Typography variant="body2">*/}
+                                {/*        {post.likes.length}*/}
+                                {/*    </Typography>*/}
+                                {/*</Box>*/}
                                 <Box
                                     sx={{
                                         display: 'flex',
@@ -92,19 +92,17 @@ export const Detail = () => {
                                         {post.comments.length}
                                     </Typography>
                                 </Box>
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                    }}
-                                >
-                                    <RepeatIcon
-                                        sx={{ mr: 1, color: 'green' }}
-                                    />
-                                    <Typography variant="body2">
-                                        {post.reposts.length}
-                                    </Typography>
-                                </Box>
+                                {/*<Box*/}
+                                {/*    sx={{*/}
+                                {/*        display: 'flex',*/}
+                                {/*        alignItems: 'center',*/}
+                                {/*    }}*/}
+                                {/*>*/}
+                                {/*    <RepeatIcon sx={{ mr: 1 }} />*/}
+                                {/*    <Typography variant="body2">*/}
+                                {/*        {post.reposts.length}*/}
+                                {/*    </Typography>*/}
+                                {/*</Box>*/}
                             </Box>
 
                             {/* Комментарии */}

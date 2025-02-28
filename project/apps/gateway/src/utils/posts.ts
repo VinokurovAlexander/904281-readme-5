@@ -9,9 +9,17 @@ export const mergePostCommentsWithUsers = (post: Post, users: User[]) => {
 
     return {
         ...post,
-        comments: post.comments.map((comment) => ({
-            ...comment,
-            user: usersMap.get(comment.userId) || null, // Добавляем данные о пользователе
-        })),
+        comments: post.comments.map((comment) => {
+            const user = usersMap.get(comment.userId);
+
+            if (!user) {
+                return comment;
+            }
+
+            return {
+                ...comment,
+                user,
+            };
+        }),
     };
 };
