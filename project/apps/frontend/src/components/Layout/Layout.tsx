@@ -8,19 +8,14 @@ import {
     Avatar,
     Menu,
     MenuItem,
-    Alert,
-    Snackbar,
-    Slide,
 } from '@mui/material';
 import {
-    selectIsShowSnackbar,
     selectUser,
-    snackbarActions,
     useAppDispatch,
     useAppSelector,
     userActions,
 } from '../../store';
-import { SlideProps } from '@mui/material/Slide/Slide';
+import { Snackbar } from '../Snackbar';
 
 interface LayoutProps {
     children: ReactNode;
@@ -37,15 +32,10 @@ const routes = [
     },
 ];
 
-function SlideTransition(props: SlideProps) {
-    return <Slide {...props} direction="up" />;
-}
-
 export const Layout = ({ children }: LayoutProps) => {
     const dispatch = useAppDispatch();
     const location = useLocation();
     const user = useAppSelector(selectUser);
-    const isShowSnackbar = useAppSelector(selectIsShowSnackbar);
 
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
@@ -60,10 +50,6 @@ export const Layout = ({ children }: LayoutProps) => {
     const handleLogout = () => {
         handleMenuClose();
         dispatch(userActions.setUser(null));
-    };
-
-    const handleSnackbarClose = () => {
-        dispatch(snackbarActions.setShow(false));
     };
 
     return (
@@ -129,33 +115,6 @@ export const Layout = ({ children }: LayoutProps) => {
             </AppBar>
 
             {children}
-
-            <Snackbar
-                open={isShowSnackbar}
-                autoHideDuration={6000}
-                onClose={handleSnackbarClose}
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-                TransitionComponent={SlideTransition}
-            >
-                <Alert
-                    onClose={handleSnackbarClose}
-                    severity="success"
-                    variant="filled"
-                    sx={{ width: '100%' }}
-                >
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                        }}
-                    >
-                        <Typography>
-                            {`${user?.firstname} ${user?.lastname}, вы успешно авторизовались!`}
-                        </Typography>
-                    </div>
-                </Alert>
-            </Snackbar>
         </>
     );
 };
