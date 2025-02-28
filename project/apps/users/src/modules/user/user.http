@@ -1,0 +1,9 @@
+### Send POST request with json body
+POST http://localhost:3003/api/v1/users/get-by-ids
+Content-Type: application/json
+
+{
+    "ids": [
+        "67c1bbcdab61dd417fc4bad6"
+    ]
+}

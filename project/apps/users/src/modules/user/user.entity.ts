@@ -1,7 +1,5 @@
 import { compare, genSalt, hash } from 'bcrypt';
-import { randomUUID } from 'node:crypto';
 import { BaseUser } from '@project/types';
-import { CreateUserDto } from './dto';
 import { SALT_ROUNDS } from './constants';
 import { StorableEntity } from '@project/types';
 
@@ -19,11 +17,12 @@ export class User implements StorableEntity<BaseUser> {
     public following: UserIdType[];
     public subscribers: UserIdType[];
 
-    constructor(data: CreateUserDto) {
+    constructor(data) {
         this.populate(data);
     }
 
-    public populate(data: CreateUserDto) {
+    public populate(data) {
+        this.id = data._id;
         this.mail = data.mail;
         this.firstname = data.firstname;
         this.lastname = data.lastname;
@@ -59,11 +58,9 @@ export class User implements StorableEntity<BaseUser> {
 
     public async init() {
         const passwordHash = await this.getPasswordHash(this.password);
-        const id = randomUUID();
         const registerDate = Date.now();
 
         this.password = passwordHash;
-        this.id = id;
         this.registerDate = registerDate;
 
         return this;

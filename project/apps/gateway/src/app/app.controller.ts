@@ -7,12 +7,18 @@ import {
     Logger,
     Res,
     Req,
+    Param,
+    HttpStatus,
 } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { AppServiceURL } from './config';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { AxiosExceptionFilter } from '../filters';
 import { Response } from 'express';
+import {
+    getUsersIdFromPostComments,
+    mergePostCommentsWithUsers,
+} from '../utils';
 
 @Controller()
 @UseFilters(AxiosExceptionFilter)
@@ -25,7 +31,7 @@ export class AppController {
         @Res() res: Response,
     ) {
         const { data } = await this.httpService.axiosRef.post(
-            `${AppServiceURL.Users}/login`,
+            `${AppServiceURL.Auth}/login`,
             loginUserDto,
         );
 
@@ -33,7 +39,7 @@ export class AppController {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
-            //sync with env
+            //TODO sync with env
             maxAge: 1000 * 60 * 5,
         });
 
@@ -46,7 +52,7 @@ export class AppController {
         @Res() res: Response,
     ) {
         const { data } = await this.httpService.axiosRef.post(
-            `${AppServiceURL.Users}/register`,
+            `${AppServiceURL.Auth}/register`,
             createUserDto,
         );
 
@@ -54,7 +60,7 @@ export class AppController {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
-            //sync with env
+            //TODO sync with env
             maxAge: 1000 * 60 * 5,
         });
 
@@ -70,10 +76,31 @@ export class AppController {
         return data;
     }
 
+    @Get('posts/:id')
+    public async getPost(@Param('id') id: string) {
+        const { data: postResponse } = await this.httpService.axiosRef.get(
+            `${AppServiceURL.Posts}/${id}`,
+        );
+
+        const userIds = getUsersIdFromPostComments(postResponse.data);
+
+        const { data: usersResponse } = await this.httpService.axiosRef.post(
+            `${AppServiceURL.Users}/get-by-ids`,
+            { ids: userIds },
+        );
+
+        const post = mergePostCommentsWithUsers(
+            postResponse.data,
+            usersResponse.data,
+        );
+
+        return { statusCode: HttpStatus.OK, data: post };
+    }
+
     @Get('check')
     public async checkUser(@Req() req) {
         const { data } = await this.httpService.axiosRef.get(
-            `${AppServiceURL.Users}/check`,
+            `${AppServiceURL.Auth}/check`,
             {
                 headers: {
                     Cookie: req.headers.cookie,

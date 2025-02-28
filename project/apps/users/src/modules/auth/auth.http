@@ -15,7 +15,7 @@ POST http://localhost:3003/api/v1/login
 Content-Type: application/json
 
 {
-    "mail": "user@notfound.local",
+    "mail": "user3@notfound.local",
     "password": "123456"
 }
 

@@ -29,17 +29,10 @@ export class AuthController {
         const user = await this.authService.register(dto);
         const accessToken = await this.authService.createUserToken(user);
 
-        res.cookie('access_token', accessToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            //sync with env
-            maxAge: 1000 * 60 * 5,
-        });
-
         return res.send({
             statusCode: 200,
             data: fillDto(UserRdo, user.toPOJO()),
+            accessToken,
         });
     }
 

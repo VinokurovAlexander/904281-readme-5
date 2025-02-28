@@ -31,6 +31,14 @@ const main = async () => {
         },
     });
 
+    await prisma.comment.create({
+        data: {
+            text: 'Awesome!',
+            userId: SECOND_USER_ID,
+            postId: post1.id,
+        },
+    });
+
     await prisma.like.create({
         data: {
             userId: FIRST_USER_ID,

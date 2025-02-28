@@ -46,6 +46,7 @@ export const signup = ({ mail, firstname, lastname, password }: SignupParams) =>
             lastname,
             password,
         }),
+        credentials: 'include',
     }).then((response) => response.json());
 
 export const checkAuth = (): Promise<LoginResponse> =>

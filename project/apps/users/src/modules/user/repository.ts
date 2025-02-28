@@ -24,4 +24,12 @@ export class UsersRepository extends MongoRepository<User, UserModel> {
 
         return this.createEntityFromDocument(document);
     }
+
+    public async findManyById(ids: string[]) {
+        const document = await this.model.find({ _id: { $in: ids } });
+
+        return document.map((document) =>
+            this.createEntityFromDocument(document),
+        );
+    }
 }
