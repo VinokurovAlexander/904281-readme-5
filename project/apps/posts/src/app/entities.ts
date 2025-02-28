@@ -63,6 +63,7 @@ export class CommentEntity implements StorableEntity<Comment> {
     text: string;
     createdAt: Date;
     userId: string;
+    postId: string;
 
     constructor(comment: Comment) {
         this.populate(comment);
@@ -73,6 +74,7 @@ export class CommentEntity implements StorableEntity<Comment> {
         this.text = comment.text;
         this.createdAt = comment.createdAt;
         this.userId = comment.userId;
+        this.postId = comment.postId;
     }
 
     toPOJO(): Comment {
@@ -81,6 +83,7 @@ export class CommentEntity implements StorableEntity<Comment> {
             text: this.text,
             createdAt: this.createdAt,
             userId: this.userId,
+            postId: this.postId,
         };
     }
 }

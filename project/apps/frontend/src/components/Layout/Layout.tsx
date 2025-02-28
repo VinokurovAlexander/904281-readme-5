@@ -15,7 +15,6 @@ import {
     useAppSelector,
     userActions,
 } from '../../store';
-import { Snackbar } from '../Snackbar';
 
 interface LayoutProps {
     children: ReactNode;
