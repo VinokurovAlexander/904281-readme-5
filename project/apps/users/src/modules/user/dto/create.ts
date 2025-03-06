@@ -2,10 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { BaseUser } from '@project/types';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
-type UserDto = Pick<
+export type UserDto = Pick<
     BaseUser,
-    'mail' | 'firstname' | 'password' | 'photo' | 'lastname'
->;
+    'mail' | 'firstname' | 'photo' | 'lastname'
+> & { password: string };
 
 export class CreateUserDto implements UserDto {
     @ApiProperty({

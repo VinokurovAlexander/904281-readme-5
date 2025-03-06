@@ -6,11 +6,10 @@ export interface BaseUser extends BaseEntity {
     mail: string;
     firstname: string;
     lastname: string;
-    password: string;
     photo?: string;
-    registerDate: number;
     following: IdType[];
     subscribers: IdType[];
+    password: string;
 }
 
 export interface User extends BaseUser {

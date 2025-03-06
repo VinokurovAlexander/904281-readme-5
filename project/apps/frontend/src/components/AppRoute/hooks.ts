@@ -7,7 +7,7 @@ import {
     userActions,
 } from '../../store';
 
-type State = 'idle' | 'fulfilled' | 'loading' | 'error';
+type State = 'idle' | 'fulfilled' | 'loading';
 
 export const useAuth = () => {
     const user = useAppSelector(selectUser);
@@ -31,7 +31,7 @@ export const useAuth = () => {
                 setState('fulfilled');
             })
             .catch(() => {
-                setState('error');
+                setState('fulfilled');
             });
     }, [dispatch, user]);
 

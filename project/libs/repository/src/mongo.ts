@@ -38,12 +38,11 @@ export abstract class MongoRepository<
         return entity;
     }
 
-    public async saveEntityWithoutId(entity): Promise<Entity> {
+    public async saveEntityWithoutId(entity: StorableEntity): Promise<Entity> {
         const newEntity = new this.model(entity.toPOJO());
         const document = await newEntity.save();
 
-        // @ts-expect-error no ideas what the fuck
-        return this.createEntityFromDocument(document);
+        return this.createEntityFromDocument(document as Document);
     }
 
     public async update(entity: Entity) {

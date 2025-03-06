@@ -4,10 +4,10 @@ import { registerAs } from '@nestjs/config';
 
 class JwiConfig {
     @IsString({ message: 'JWT secret is required' })
-    public secret;
+    public secret: string;
 
     @IsString({ message: 'JWT expires time is required' })
-    public expiresIn;
+    public expiresIn: string;
 
     public async validate() {
         try {
