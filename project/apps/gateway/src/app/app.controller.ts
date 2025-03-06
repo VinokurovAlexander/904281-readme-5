@@ -16,10 +16,12 @@ import { CreateUserDto, LoginUserDto } from './dto';
 import { AxiosExceptionFilter } from '../filters';
 import { Response, Request } from 'express';
 import {
+    getUserIdFromPostAuthor,
     getUsersIdFromPostComments,
     mergePostCommentsWithUsers,
 } from '../utils';
 import { CreateCommentDto } from '@project/types';
+import { mergePostsWithUsers } from '../utils/posts';
 
 @Controller()
 @UseFilters(AxiosExceptionFilter)
@@ -70,11 +72,23 @@ export class AppController {
 
     @Get('posts')
     public async getPosts() {
-        const { data } = await this.httpService.axiosRef.get(
+        const { data: postResponse } = await this.httpService.axiosRef.get(
             `${AppServiceURL.Posts}`,
         );
 
-        return data;
+        const userIds = getUserIdFromPostAuthor(postResponse.data);
+
+        const { data: usersResponse } = await this.httpService.axiosRef.post(
+            `${AppServiceURL.Users}/get-by-ids`,
+            { ids: userIds },
+        );
+
+        const posts = mergePostsWithUsers(
+            postResponse.data,
+            usersResponse.data,
+        );
+
+        return { statusCode: HttpStatus.OK, data: posts };
     }
 
     @Get('posts/:id')

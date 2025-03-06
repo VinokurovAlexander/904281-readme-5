@@ -5,17 +5,18 @@ import {
     CardContent,
     Card,
     IconButton,
+    Avatar,
 } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
 import { Layout } from '../../components';
 import { useEffect, useState } from 'react';
-import { Post } from '@project/types';
+import { PostWithUser } from '@project/types';
 import { getPosts } from '../../api';
 import { Link } from 'react-router-dom';
 
 export const Popular = () => {
-    const [posts, setPosts] = useState<Post[]>([]);
+    const [posts, setPosts] = useState<PostWithUser[]>([]);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
@@ -91,6 +92,26 @@ export const Popular = () => {
                                     >
                                         {post.content}
                                     </Typography>
+
+                                    <Box
+                                        sx={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            mb: 2,
+                                        }}
+                                    >
+                                        <Avatar
+                                            src={post.user.photo}
+                                            sx={{
+                                                width: 40,
+                                                height: 40,
+                                                mr: 2,
+                                            }}
+                                        />
+                                        <Typography variant="body1">
+                                            {`${post.user.firstname} ${post.user.lastname}`}
+                                        </Typography>
+                                    </Box>
 
                                     <Box
                                         sx={{
