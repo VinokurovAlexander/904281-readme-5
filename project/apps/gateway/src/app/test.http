@@ -3,3 +3,14 @@ GET http://localhost:3000/api/v1/check
 
 ### Posts
 GET http://localhost:3000/api/v1/posts
+
+
+### AddedComment
+POST http://localhost:3000/api/v1/add-comment
+Content-Type: application/json
+
+{
+    "text": "this is new awesome comment #2",
+    "userId": "67c1c5f060c781d3640416ce",
+    "postId": "d6e9110b-31a8-4229-a895-1b3e3b318cb5"
+}

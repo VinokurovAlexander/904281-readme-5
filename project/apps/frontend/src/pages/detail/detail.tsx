@@ -1,27 +1,34 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { Post } from '@project/types';
+import { Comment, Post } from '@project/types';
+import { Box, Card, CardContent, Divider, Typography } from '@mui/material';
+import CommentIcon from '@mui/icons-material/Comment';
 import { getPostById } from '../../api';
 import { Layout } from '../../components';
-import {
-    Avatar,
-    Box,
-    Card,
-    CardContent,
-    Divider,
-    ListItem,
-    ListItemText,
-    Typography,
-    List,
-} from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import CommentIcon from '@mui/icons-material/Comment';
-import RepeatIcon from '@mui/icons-material/Repeat';
+import { Comments } from './comments';
+import { AddComment } from './add-comment';
+import { selectUser, useAppSelector } from '../../store';
 
 export const Detail = () => {
     const [post, setPost] = useState<Post | null>(null);
+    const user = useAppSelector(selectUser);
 
     const { id } = useParams();
+
+    const handleCommentAdd = (newComment: Comment) => {
+        if (!post) {
+            return;
+        }
+
+        const commentWithUserData = {
+            ...newComment,
+            user,
+        };
+
+        const newComments = [...post.comments, commentWithUserData];
+
+        setPost({ ...post, comments: newComments });
+    };
 
     useEffect(() => {
         if (!id) {
@@ -109,46 +116,11 @@ export const Detail = () => {
                             <Typography variant="h6" gutterBottom>
                                 Комментарии
                             </Typography>
-                            <List>
-                                {post.comments.map((comment) => (
-                                    <ListItem
-                                        key={comment.id}
-                                        alignItems="flex-start"
-                                    >
-                                        <Avatar
-                                            sx={{
-                                                bgcolor: 'primary.main',
-                                                mr: 2,
-                                            }}
-                                            //@ts-expect-error
-                                            src={comment.user.photo}
-                                        />
-
-                                        <ListItemText
-                                            //@ts-expect-error
-                                            primary={`${comment.user.firstname} ${comment.user.lastname}`}
-                                            secondary={
-                                                <>
-                                                    <Typography
-                                                        variant="body2"
-                                                        color="text.secondary"
-                                                    >
-                                                        {comment.text}
-                                                    </Typography>
-                                                    {/*<Typography*/}
-                                                    {/*    variant="caption"*/}
-                                                    {/*    color="text.secondary"*/}
-                                                    {/*>*/}
-                                                    {/*    {new Date(*/}
-                                                    {/*        comment.createdAt,*/}
-                                                    {/*    ).toLocaleString()}*/}
-                                                    {/*</Typography>*/}
-                                                </>
-                                            }
-                                        />
-                                    </ListItem>
-                                ))}
-                            </List>
+                            <Comments data={post.comments} />
+                            <AddComment
+                                postId={post.id}
+                                onAddComment={handleCommentAdd}
+                            />
                         </CardContent>
                     </Card>
                 </Box>

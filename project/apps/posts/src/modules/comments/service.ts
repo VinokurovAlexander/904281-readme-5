@@ -1,5 +1,5 @@
 import { CommentsRepository } from './repository';
-import { CreateCommentDto } from './dto';
+import { CreateCommentDto } from '@project/types';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

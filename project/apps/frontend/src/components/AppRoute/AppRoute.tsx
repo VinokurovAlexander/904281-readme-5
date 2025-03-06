@@ -28,10 +28,6 @@ export const AppRoute: FC<AppRouteProps> = ({
         );
     }
 
-    if (state === 'error') {
-        return <Navigate to={'/login'} replace />;
-    }
-
     if (state === 'fulfilled') {
         if (isProtected && !user) {
             return <Navigate to="/login" replace />;

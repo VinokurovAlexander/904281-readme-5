@@ -1,10 +1,10 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { BaseUser } from '@project/types';
 
 @Schema({
     collection: 'users',
     timestamps: true,
+    toObject: { virtuals: true },
 })
 export class UserModel extends Document<string> {
     @Prop({ required: true })
@@ -22,9 +22,6 @@ export class UserModel extends Document<string> {
     @Prop()
     public photo: string;
 
-    @Prop({ required: true })
-    public registerDate: number;
-
     @Prop()
     public following: string[];
 
@@ -33,3 +30,7 @@ export class UserModel extends Document<string> {
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);
+
+UserSchema.virtual('id').get(function () {
+    return this._id.toString();
+});

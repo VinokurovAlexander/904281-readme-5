@@ -14,11 +14,12 @@ import { HttpService } from '@nestjs/axios';
 import { AppServiceURL } from './config';
 import { CreateUserDto, LoginUserDto } from './dto';
 import { AxiosExceptionFilter } from '../filters';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import {
     getUsersIdFromPostComments,
     mergePostCommentsWithUsers,
 } from '../utils';
+import { CreateCommentDto } from '@project/types';
 
 @Controller()
 @UseFilters(AxiosExceptionFilter)
@@ -98,7 +99,7 @@ export class AppController {
     }
 
     @Get('check')
-    public async checkUser(@Req() req) {
+    public async checkUser(@Req() req: Request) {
         const { data } = await this.httpService.axiosRef.get(
             `${AppServiceURL.Auth}/check`,
             {
@@ -106,6 +107,18 @@ export class AppController {
                     Cookie: req.headers.cookie,
                 },
             },
+        );
+
+        return data;
+    }
+
+    @Post('add-comment')
+    public async addComment(@Body() dto: CreateCommentDto) {
+        Logger.log('dto is', dto);
+
+        const { data } = await this.httpService.axiosRef.post(
+            `${AppServiceURL.Comments}/add`,
+            dto,
         );
 
         return data;

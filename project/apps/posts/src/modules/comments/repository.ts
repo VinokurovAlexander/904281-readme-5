@@ -2,7 +2,7 @@ import { BasePostgresRepository } from '@project/repository';
 import { CommentEntity } from '../../app/entities';
 import { CommentFactory } from '../../app/factories';
 import { PrismaClientService } from '@project/prisma';
-import { CreateCommentDto } from './dto';
+import { CreateCommentDto } from '@project/types';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()

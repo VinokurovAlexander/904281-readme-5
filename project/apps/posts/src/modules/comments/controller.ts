@@ -1,6 +1,6 @@
 import { Controller, Post, Body, HttpStatus } from '@nestjs/common';
 import { CommentsService } from './service';
-import { CreateCommentDto } from './dto';
+import { CreateCommentDto } from '@project/types';
 
 @Controller('comments')
 export class CommentsController {
@@ -15,7 +15,10 @@ export class CommentsController {
         } catch (error) {
             return {
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-                message: error.message,
+                message:
+                    error instanceof Error
+                        ? error.message
+                        : 'something went wrong',
             };
         }
     }

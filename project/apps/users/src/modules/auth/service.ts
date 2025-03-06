@@ -10,7 +10,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto, LoginUserDto } from '../user/dto';
 import { UsersRepository } from '../user/repository';
-import { User } from '../user/user.entity';
+import { RegisteringUser, User } from '../user/user.entity';
 import { AccessTokenPayload } from '../../types';
 
 @Injectable()
@@ -28,9 +28,9 @@ export class AuthService {
             throw new ConflictException('User with this email exists');
         }
 
-        const user = await new User(dto).init();
+        const user = await new RegisteringUser(dto).init(dto.password);
 
-        return this.usersRepository.save(user);
+        return this.usersRepository.saveEntityWithoutId(user);
     }
 
     public async verifyUser(dto: LoginUserDto) {

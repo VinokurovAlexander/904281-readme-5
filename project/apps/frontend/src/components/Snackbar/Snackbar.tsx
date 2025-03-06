@@ -27,8 +27,6 @@ export const Snackbar = memo(() => {
         dispatch(snackbarActions.setShow(false));
     };
 
-    console.log('render snackbar');
-
     return (
         <SnackbarUI
             open={isShowSnackbar}

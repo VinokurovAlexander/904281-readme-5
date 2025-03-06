@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
+import { ObjectId } from 'mongoose';
 
 export class UserRdo {
     @ApiProperty({
@@ -7,7 +8,7 @@ export class UserRdo {
         example: '123',
     })
     @Expose()
-    public id: string;
+    id: string;
 
     @ApiProperty({
         description: 'User mail',
@@ -38,13 +39,6 @@ export class UserRdo {
     public lastname: string;
 
     @ApiProperty({
-        description: 'Register date',
-        example: 1730368846150,
-    })
-    @Expose()
-    public registerDate: number;
-
-    @ApiProperty({
         description: 'Following users',
         example: ['12', '22'],
     })
@@ -57,4 +51,7 @@ export class UserRdo {
     })
     @Expose()
     public subscribers: string[];
+
+    @Expose({ toPlainOnly: true })
+    public password: string;
 }
