@@ -8,8 +8,8 @@ export class ConfirmationController {
 
     @Post('create')
     async createConfirmation(@Body() body: ConfirmationDto) {
-        await this.confirmationService.createToken(body.userId);
+        const data = await this.confirmationService.createToken(body.userId);
 
-        return { statusCode: HttpStatus.OK };
+        return { statusCode: HttpStatus.OK, data };
     }
 }

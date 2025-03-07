@@ -11,7 +11,7 @@ export class ConfirmationService {
     public async createToken(userId: string) {
         const confirmationEntity = new ConfirmationEntity(userId).init();
 
-        await this.confirmationRepository.saveEntityWithoutId(
+        return await this.confirmationRepository.saveEntityWithoutId(
             confirmationEntity,
         );
     }

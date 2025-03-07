@@ -4,6 +4,7 @@ import { Document } from 'mongoose';
 @Schema({
     collection: 'confirmation',
     timestamps: true,
+    toObject: { virtuals: true },
 })
 export class ConfirmationModel extends Document<string> {
     @Prop({ required: true, unique: true })
@@ -20,3 +21,7 @@ export const ConfirmationSchema =
     SchemaFactory.createForClass(ConfirmationModel);
 
 ConfirmationSchema.index({ expiresIn: 1 }, { expireAfterSeconds: 1 });
+
+ConfirmationSchema.virtual('id').get(function () {
+    return this._id.toString();
+});

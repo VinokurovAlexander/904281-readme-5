@@ -54,12 +54,12 @@ export class AppController {
         @Body() createUserDto: CreateUserDto,
         @Res() res: Response,
     ) {
-        const { data } = await this.httpService.axiosRef.post(
+        const { data: userResponse } = await this.httpService.axiosRef.post(
             `${AppServiceURL.Auth}/register`,
             createUserDto,
         );
 
-        res.cookie('access_token', data.accessToken, {
+        res.cookie('access_token', userResponse.accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
@@ -67,7 +67,11 @@ export class AppController {
             maxAge: 1000 * 60 * 5,
         });
 
-        return res.send(data);
+        await this.httpService.axiosRef.post(`${AppServiceURL.ConfirmCreate}`, {
+            userId: userResponse.data.id,
+        });
+
+        return res.send(userResponse);
     }
 
     @Get('posts')
