@@ -1,0 +1,1 @@
+export { mailerConfig } from './config';
