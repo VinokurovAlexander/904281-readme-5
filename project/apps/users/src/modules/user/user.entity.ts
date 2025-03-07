@@ -27,6 +27,8 @@ export class RegisteringUser
     public mail: string;
     public firstname: string;
     public lastname: string;
+    public isConfirmed: boolean;
+    public photo: string;
 
     constructor(data: UserDto) {
         super();
@@ -34,6 +36,8 @@ export class RegisteringUser
         this.mail = data.mail;
         this.firstname = data.firstname;
         this.lastname = data.lastname;
+        this.isConfirmed = false;
+        this.photo = data.photo ?? '';
     }
 
     public async init(password: string) {
@@ -48,6 +52,8 @@ export class RegisteringUser
             firstname: this.firstname,
             lastname: this.lastname,
             password: this.password,
+            isConfirmed: this.isConfirmed,
+            photo: this.photo,
         };
     }
 }
@@ -61,6 +67,7 @@ export class User extends UserWithPassword implements StorableEntity<BaseUser> {
     public following: UserIdType[];
     public subscribers: UserIdType[];
     public password: string;
+    public isConfirmed: boolean;
 
     constructor(data: UserRdo) {
         super();
@@ -77,6 +84,7 @@ export class User extends UserWithPassword implements StorableEntity<BaseUser> {
         this.password = data.password;
         this.following = [];
         this.subscribers = [];
+        this.isConfirmed = data.isConfirmed;
     }
 
     public toPOJO() {
@@ -89,6 +97,7 @@ export class User extends UserWithPassword implements StorableEntity<BaseUser> {
             following: this.following,
             subscribers: this.subscribers,
             password: this.password,
+            isConfirmed: this.isConfirmed,
         };
     }
 }

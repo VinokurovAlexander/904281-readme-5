@@ -54,4 +54,7 @@ export class UserRdo {
 
     @Expose({ toPlainOnly: true })
     public password: string;
+
+    @Expose()
+    isConfirmed: boolean;
 }

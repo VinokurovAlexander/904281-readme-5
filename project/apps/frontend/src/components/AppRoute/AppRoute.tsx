@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { Box, CircularProgress } from '@mui/material';
 import { useAuth } from './hooks';
+import { Confirm } from '../../pages';
 
 interface AppRouteProps {
     isProtected?: boolean;
@@ -29,6 +30,10 @@ export const AppRoute: FC<AppRouteProps> = ({
     }
 
     if (state === 'fulfilled') {
+        if (user && !user.isConfirmed) {
+            return <Confirm />;
+        }
+
         if (isProtected && !user) {
             return <Navigate to="/login" replace />;
         }

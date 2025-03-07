@@ -8,6 +8,7 @@ import {
     Avatar,
     Menu,
     MenuItem,
+    Box,
 } from '@mui/material';
 import {
     selectUser,

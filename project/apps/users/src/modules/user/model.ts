@@ -27,6 +27,9 @@ export class UserModel extends Document<string> {
 
     @Prop()
     public subscribers: string[];
+
+    @Prop({ required: true })
+    public isConfirmed: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

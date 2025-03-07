@@ -80,8 +80,6 @@ export class AuthService {
             throw new UnauthorizedException('access not valid');
         }
 
-        Logger.log('token payload', payload);
-
         const user = await this.usersRepository.findByMail(payload.mail);
 
         if (!user) {
