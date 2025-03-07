@@ -6,6 +6,7 @@ import { AuthController } from './controller';
 import { AuthService } from './service';
 import { UserModule } from '../user/module';
 import { getJwtOptions } from '../jwt';
+import { ConfirmationModule } from '../confirmation';
 
 @Module({
     imports: [
@@ -14,6 +15,7 @@ import { getJwtOptions } from '../jwt';
             inject: [ConfigService],
             useFactory: getJwtOptions,
         }),
+        ConfirmationModule,
     ],
     providers: [AuthService],
     controllers: [AuthController],
