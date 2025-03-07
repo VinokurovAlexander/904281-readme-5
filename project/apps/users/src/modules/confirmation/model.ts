@@ -18,3 +18,5 @@ export class ConfirmationModel extends Document<string> {
 
 export const ConfirmationSchema =
     SchemaFactory.createForClass(ConfirmationModel);
+
+ConfirmationSchema.index({ expiresIn: 1 }, { expireAfterSeconds: 1 });

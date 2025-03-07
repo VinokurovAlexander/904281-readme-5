@@ -43,5 +43,3 @@ export class ConfirmationEntity implements StorableEntity<Confirmation> {
         return { token, expiresIn };
     }
 }
-
-export class StoredConfirmationEntity {}
