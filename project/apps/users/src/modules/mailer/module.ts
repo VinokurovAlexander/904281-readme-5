@@ -8,5 +8,6 @@ import { MailController } from './controller';
     imports: [MailerModule.forRootAsync(getMailOptions())],
     providers: [MailService],
     controllers: [MailController],
+    exports: [MailService],
 })
 export class MailModule {}

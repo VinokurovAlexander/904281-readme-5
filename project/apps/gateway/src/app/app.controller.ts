@@ -67,10 +67,6 @@ export class AppController {
             maxAge: 1000 * 60 * 5,
         });
 
-        await this.httpService.axiosRef.post(`${AppServiceURL.ConfirmCreate}`, {
-            userId: userResponse.data.id,
-        });
-
         return res.send(userResponse);
     }
 

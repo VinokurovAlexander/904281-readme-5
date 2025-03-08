@@ -18,5 +18,6 @@ import { ConfirmationService } from './service';
         ConfirmationService,
     ],
     controllers: [ConfirmationController],
+    exports: [ConfirmationService],
 })
 export class ConfirmationModule {}

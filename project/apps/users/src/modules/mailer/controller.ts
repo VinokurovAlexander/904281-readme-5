@@ -9,7 +9,11 @@ export class MailController {
 
     @Post('send-confirm')
     public async sendConfirmMessage(@Body() data: SendConfirmMessageDto) {
-        await this.mailService.sendConfigMessage(data.mail, data.username);
+        await this.mailService.sendConfirmMessage(
+            data.mail,
+            data.username,
+            data.token,
+        );
 
         return { statusCode: HttpStatusCode.Ok };
     }

@@ -26,8 +26,7 @@ export class AuthController {
     })
     @Post('register')
     public async register(@Body() dto: CreateUserDto, @Res() res: Response) {
-        const user = await this.authService.register(dto);
-        const accessToken = await this.authService.createUserToken(user);
+        const { user, accessToken } = await this.authService.register(dto);
 
         return res.send({
             statusCode: 200,

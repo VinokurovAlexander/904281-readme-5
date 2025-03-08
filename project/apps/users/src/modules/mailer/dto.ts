@@ -6,4 +6,7 @@ export class SendConfirmMessageDto {
 
     @IsString()
     public username: string;
+
+    @IsString()
+    public token: string;
 }

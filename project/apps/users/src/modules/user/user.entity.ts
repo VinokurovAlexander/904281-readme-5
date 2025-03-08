@@ -100,4 +100,8 @@ export class User extends UserWithPassword implements StorableEntity<BaseUser> {
             isConfirmed: this.isConfirmed,
         };
     }
+
+    public getUsername() {
+        return `${this.firstname} ${this.lastname}`;
+    }
 }
