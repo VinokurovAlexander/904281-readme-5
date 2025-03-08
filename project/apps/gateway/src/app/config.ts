@@ -4,5 +4,5 @@ export enum AppServiceURL {
     Auth = 'http://localhost:3003/api/v1',
     Users = 'http://localhost:3003/api/v1/users',
 
-    ConfirmCreate = 'http://localhost:3003/api/v1/confirmation/create',
+    Confirm = 'http://localhost:3003/api/v1/confirmation',
 }

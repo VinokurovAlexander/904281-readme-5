@@ -15,4 +15,4 @@ export {
 
 export { BaseUser, User } from './lib/user';
 
-export { CreateCommentDto } from './lib/dto';
+export { CreateCommentDto, ConfirmMailDto } from './lib/dto';

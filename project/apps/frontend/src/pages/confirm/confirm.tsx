@@ -1,52 +1,72 @@
+import { useEffect, useState } from 'react';
+import { State } from '../../types';
 import { Layout } from '../../components';
-import { Box, Paper, Typography, Button } from '@mui/material';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import { CircularProgress } from '@mui/material';
+import { useParams } from 'react-router-dom';
+import { selectUser, useAppSelector } from '../../store';
+import { confirmUser } from '../../api';
+import { Expired } from './expired';
+import { Error } from './error';
+import { ActivationSuccessMessage } from './success';
+
+enum ErrorType {
+    TOKEN_NOT_FOUND = 'token no found',
+    UNKNOWN = 'unknown',
+}
 
 export const Confirm = () => {
+    const [state, setState] = useState<State>();
+    const [error, setError] = useState<ErrorType | null>(null);
+
+    const { id: token } = useParams();
+    const user = useAppSelector(selectUser);
+
+    const errorHandle = (error: ErrorType) => {
+        setState('error');
+        setError(error);
+    };
+
+    useEffect(() => {
+        if (!token || !user) {
+            errorHandle(ErrorType.UNKNOWN);
+            return;
+        }
+
+        setState('loading');
+
+        confirmUser(user.id, token)
+            .then((response) => {
+                const { statusCode } = response;
+
+                switch (statusCode) {
+                    case 200:
+                        setState('fulfilled');
+                        break;
+                    case 404:
+                        errorHandle(ErrorType.TOKEN_NOT_FOUND);
+                        break;
+                    default:
+                        errorHandle(ErrorType.UNKNOWN);
+                }
+            })
+            .catch(() => {
+                errorHandle(ErrorType.UNKNOWN);
+            });
+    }, [token, user]);
+
     return (
         <Layout>
-            <Box display="flex" alignItems="center" flexDirection="column">
-                <Paper
-                    elevation={3}
-                    sx={{
-                        padding: 4,
-                        textAlign: 'center',
-                        maxWidth: 500,
-                        width: '100%',
-                        mt: 6,
-                    }}
-                >
-                    <MailOutlineIcon
-                        sx={{
-                            fontSize: 60,
-                            color: 'primary.main',
-                            mb: 2,
-                        }}
-                    />
-
-                    <Typography variant="h4" component="h1" gutterBottom>
-                        Подтвердите ваш email
-                    </Typography>
-                    <Typography variant="body1" sx={{ mb: 3 }}>
-                        Мы отправили письмо с ссылкой для активации вашего
-                        аккаунта на вашу почту. Пожалуйста, перейдите по ссылке,
-                        чтобы завершить регистрацию.
-                    </Typography>
-                    <Typography variant="body2" sx={{ mb: 3 }}>
-                        Если вы не получили письмо, проверьте папку "Спам" или
-                        запросите повторную отправку письма.
-                    </Typography>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        // component={Link}
-                        // to="/resend-email"
-                        disabled
-                    >
-                        Отправить письмо повторно
-                    </Button>
-                </Paper>
-            </Box>
+            {state === 'loading' && <CircularProgress />}
+            {state === 'error' && (
+                <h2>
+                    {error === ErrorType.TOKEN_NOT_FOUND ? (
+                        <Expired />
+                    ) : (
+                        <Error />
+                    )}
+                </h2>
+            )}
+            {state === 'fulfilled' && <ActivationSuccessMessage />}
         </Layout>
     );
 };

@@ -4,7 +4,7 @@ import { ConfirmationEntity } from './entity';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { ConfirmationFactory } from './factory';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class ConfirmationRepository extends MongoRepository<
@@ -16,5 +16,17 @@ export class ConfirmationRepository extends MongoRepository<
         @InjectModel(ConfirmationModel.name) model: Model<ConfirmationModel>,
     ) {
         super(entityFactory, model);
+    }
+
+    public async findTokenByUserId(userId: string) {
+        const document = await this.model.findOne({ userId }).exec();
+
+        if (!document) {
+            throw new NotFoundException(
+                `Confirm token for user with id ${userId} not found`,
+            );
+        }
+
+        return document;
     }
 }

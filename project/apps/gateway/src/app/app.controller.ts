@@ -20,7 +20,7 @@ import {
     getUsersIdFromPostComments,
     mergePostCommentsWithUsers,
 } from '../utils';
-import { CreateCommentDto } from '@project/types';
+import { ConfirmMailDto, CreateCommentDto } from '@project/types';
 import { mergePostsWithUsers } from '../utils/posts';
 
 @Controller()
@@ -128,11 +128,19 @@ export class AppController {
 
     @Post('add-comment')
     public async addComment(@Body() dto: CreateCommentDto) {
-        Logger.log('dto is', dto);
-
         const { data } = await this.httpService.axiosRef.post(
             `${AppServiceURL.Comments}/add`,
             dto,
+        );
+
+        return data;
+    }
+
+    @Post('confirmation')
+    public async confirmUser(@Body() body: ConfirmMailDto) {
+        const { data } = await this.httpService.axiosRef.post(
+            `${AppServiceURL.Confirm}`,
+            body,
         );
 
         return data;

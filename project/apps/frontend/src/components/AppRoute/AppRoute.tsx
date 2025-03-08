@@ -1,8 +1,8 @@
 import { FC, ReactNode } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useMatch } from 'react-router-dom';
 import { Box, CircularProgress } from '@mui/material';
 import { useAuth } from './hooks';
-import { Confirm } from '../../pages';
+import { ConfirmMessage } from '../../pages';
 
 interface AppRouteProps {
     isProtected?: boolean;
@@ -14,6 +14,10 @@ export const AppRoute: FC<AppRouteProps> = ({
     isProtected = false,
 }) => {
     const { user, state } = useAuth();
+
+    const isConfirmPage = useMatch('/confirm/:id');
+    const isUserAuthenticated = !!user;
+    const isUserConfirmed = user?.isConfirmed;
 
     if (state === 'loading') {
         return (
@@ -30,16 +34,20 @@ export const AppRoute: FC<AppRouteProps> = ({
     }
 
     if (state === 'fulfilled') {
-        if (user && !user.isConfirmed) {
-            return <Confirm />;
-        }
-
-        if (isProtected && !user) {
+        if (isProtected && !isUserAuthenticated) {
             return <Navigate to="/login" replace />;
         }
 
-        if (!isProtected && user) {
+        if (!isProtected && isUserAuthenticated) {
             return <Navigate to="/" replace />;
+        }
+
+        if (isConfirmPage && isUserConfirmed) {
+            return <Navigate to="/" replace />;
+        }
+
+        if (isUserAuthenticated && !isUserConfirmed && !isConfirmPage) {
+            return <ConfirmMessage />;
         }
 
         return children;

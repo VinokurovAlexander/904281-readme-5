@@ -5,12 +5,14 @@ import { ConfirmationController } from './controller';
 import { ConfirmationRepository } from './repository';
 import { ConfirmationFactory } from './factory';
 import { ConfirmationService } from './service';
+import { UserModule } from '../user/module';
 
 @Module({
     imports: [
         MongooseModule.forFeature([
             { name: ConfirmationModel.name, schema: ConfirmationSchema },
         ]),
+        UserModule,
     ],
     providers: [
         ConfirmationRepository,
