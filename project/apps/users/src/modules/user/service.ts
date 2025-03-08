@@ -17,6 +17,6 @@ export class UsersService {
     public async confirmUser(user: User) {
         user.isConfirmed = true;
 
-        await this.usersRepository.update(user);
+        return await this.usersRepository.update(user);
     }
 }

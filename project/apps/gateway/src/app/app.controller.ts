@@ -22,6 +22,7 @@ import {
 } from '../utils';
 import { ConfirmMailDto, CreateCommentDto } from '@project/types';
 import { mergePostsWithUsers } from '../utils/posts';
+import { UpdateConfirmDto } from '@project/types';
 
 @Controller()
 @UseFilters(AxiosExceptionFilter)
@@ -140,6 +141,16 @@ export class AppController {
     public async confirmUser(@Body() body: ConfirmMailDto) {
         const { data } = await this.httpService.axiosRef.post(
             `${AppServiceURL.Confirm}`,
+            body,
+        );
+
+        return data;
+    }
+
+    @Post('confirmation/update')
+    public async updateConfirmation(@Body() body: UpdateConfirmDto) {
+        const { data } = await this.httpService.axiosRef.post(
+            `${AppServiceURL.Confirm}/update`,
             body,
         );
 

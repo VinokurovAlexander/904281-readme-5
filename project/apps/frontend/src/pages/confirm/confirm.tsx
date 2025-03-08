@@ -3,7 +3,12 @@ import { State } from '../../types';
 import { Layout } from '../../components';
 import { CircularProgress } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { selectUser, useAppSelector } from '../../store';
+import {
+    selectUser,
+    useAppDispatch,
+    useAppSelector,
+    userActions,
+} from '../../store';
 import { confirmUser } from '../../api';
 import { Expired } from './expired';
 import { Error } from './error';
@@ -15,7 +20,9 @@ enum ErrorType {
 }
 
 export const Confirm = () => {
-    const [state, setState] = useState<State>();
+    const dispatch = useAppDispatch();
+
+    const [state, setState] = useState<State>('idle');
     const [error, setError] = useState<ErrorType | null>(null);
 
     const { id: token } = useParams();
@@ -27,8 +34,13 @@ export const Confirm = () => {
     };
 
     useEffect(() => {
-        if (!token || !user) {
-            errorHandle(ErrorType.UNKNOWN);
+        if (!token || !user || state === 'fulfilled') {
+            return;
+        }
+
+        if (user.isConfirmed) {
+            setState('fulfilled');
+
             return;
         }
 
@@ -41,7 +53,9 @@ export const Confirm = () => {
                 switch (statusCode) {
                     case 200:
                         setState('fulfilled');
+                        dispatch(userActions.setUser(response.data));
                         break;
+                    case 400:
                     case 404:
                         errorHandle(ErrorType.TOKEN_NOT_FOUND);
                         break;
@@ -52,7 +66,7 @@ export const Confirm = () => {
             .catch(() => {
                 errorHandle(ErrorType.UNKNOWN);
             });
-    }, [token, user]);
+    }, [dispatch, state, token, user]);
 
     return (
         <Layout>

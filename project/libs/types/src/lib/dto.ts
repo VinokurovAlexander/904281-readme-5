@@ -21,3 +21,9 @@ export class ConfirmMailDto {
     @IsString()
     token: string;
 }
+
+export class UpdateConfirmDto {
+    @Expose()
+    @IsMongoId()
+    userId: string;
+}

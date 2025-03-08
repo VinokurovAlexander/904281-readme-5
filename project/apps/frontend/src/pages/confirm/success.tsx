@@ -6,6 +6,7 @@ import {
     Typography,
     Button,
     CircularProgress,
+    Stack,
 } from '@mui/material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
@@ -61,10 +62,18 @@ export const ActivationSuccessMessage = () => {
                     Ваш аккаунт успешно активирован. Сейчас вы будете
                     перенаправлены на главную страницу.
                 </Typography>
-                <Typography variant="body2" sx={{ mb: 3 }}>
-                    Перенаправление через: {timeLeft} секунд...
-                </Typography>
-                <CircularProgress size={24} sx={{ mb: 2 }} />{' '}
+                <Stack
+                    direction="row"
+                    alignItems="center"
+                    justifyContent="center"
+                    spacing={2}
+                    sx={{ mb: 3 }}
+                >
+                    <CircularProgress size={24} />
+                    <Typography variant="body2">
+                        Перенаправление через: {timeLeft} секунд...
+                    </Typography>
+                </Stack>
                 <Button
                     variant="contained"
                     color="primary"

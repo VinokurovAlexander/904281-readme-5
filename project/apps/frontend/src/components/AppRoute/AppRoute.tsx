@@ -42,10 +42,6 @@ export const AppRoute: FC<AppRouteProps> = ({
             return <Navigate to="/" replace />;
         }
 
-        if (isConfirmPage && isUserConfirmed) {
-            return <Navigate to="/" replace />;
-        }
-
         if (isUserAuthenticated && !isUserConfirmed && !isConfirmPage) {
             return <ConfirmMessage />;
         }

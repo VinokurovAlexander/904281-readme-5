@@ -2,7 +2,14 @@ import { FormEvent, useState } from 'react';
 import { signup } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, userActions } from '../../store';
-import { Alert, Box, Button, Container, TextField } from '@mui/material';
+import {
+    Alert,
+    Box,
+    Button,
+    CircularProgress,
+    Container,
+    TextField,
+} from '@mui/material';
 import { Layout, Password } from '../../components';
 
 export const Signup = () => {
@@ -126,6 +133,9 @@ export const Signup = () => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                         disabled={isLoading}
+                        startIcon={
+                            isLoading ? <CircularProgress size={20} /> : null
+                        }
                     >
                         Зарегистрироваться
                     </Button>

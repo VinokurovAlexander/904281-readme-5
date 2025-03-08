@@ -2,6 +2,7 @@ import { Controller, Post, Body, HttpStatus } from '@nestjs/common';
 import { ConfirmationService } from './service';
 import { CreateConfirmationDto } from './dto';
 import { ConfirmMailDto } from '@project/types';
+import { UpdateConfirmDto } from '@project/types';
 
 @Controller('confirmation')
 export class ConfirmationController {
@@ -16,11 +17,25 @@ export class ConfirmationController {
 
     @Post('/')
     async confirmMail(@Body() body: ConfirmMailDto) {
-        await this.confirmationService.confirmMail(body.userId, body.token);
+        const data = await this.confirmationService.confirmMail(
+            body.userId,
+            body.token,
+        );
 
         return {
             statusCode: HttpStatus.OK,
             message: 'User has been confirmed',
+            data,
+        };
+    }
+
+    @Post('update')
+    async updateConfirmation(@Body() body: UpdateConfirmDto) {
+        await this.confirmationService.updateConfirm(body.userId);
+
+        return {
+            statusCode: HttpStatus.OK,
+            message: 'Confirm token has been updated',
         };
     }
 }

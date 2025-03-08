@@ -6,6 +6,7 @@ import { ConfirmationRepository } from './repository';
 import { ConfirmationFactory } from './factory';
 import { ConfirmationService } from './service';
 import { UserModule } from '../user/module';
+import { MailModule } from '../mailer/module';
 
 @Module({
     imports: [
@@ -13,6 +14,7 @@ import { UserModule } from '../user/module';
             { name: ConfirmationModel.name, schema: ConfirmationSchema },
         ]),
         UserModule,
+        MailModule,
     ],
     providers: [
         ConfirmationRepository,
