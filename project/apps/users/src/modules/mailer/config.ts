@@ -1,14 +1,8 @@
-import { IsNumber, IsString, validateOrReject } from 'class-validator';
+import { IsString, validateOrReject } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 import { registerAs } from '@nestjs/config';
 
-class MailerConfig {
-    @IsString({ message: 'SMTP host is required' })
-    public smtpHost: string;
-
-    @IsNumber()
-    public smtpPort: number;
-
+class MailConfig {
     @IsString({ message: 'Mail user is required' })
     public user: string;
 
@@ -28,10 +22,8 @@ class MailerConfig {
     }
 }
 
-const getMailerConfig = async () => {
-    const config = plainToClass(MailerConfig, {
-        smtpHost: process.env.MAIL_SMTP_HOST,
-        smtpPort: parseInt(process.env.MAIL_SMTP_PORT ?? '25', 10),
+const getMailConfig = async () => {
+    const config = plainToClass(MailConfig, {
         user: process.env.MAIL_USER_NAME,
         password: process.env.MAIL_USER_PASSWORD,
         from: process.env.MAIL_FROM,
@@ -42,4 +34,4 @@ const getMailerConfig = async () => {
     return config;
 };
 
-export const mailerConfig = registerAs('mailer', () => getMailerConfig());
+export const mailConfig = registerAs('mail', () => getMailConfig());

@@ -4,19 +4,16 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 
 import { resolve } from 'node:path';
 
-const getMailerOptions = (): MailerAsyncOptions => {
+export const getMailOptions = (): MailerAsyncOptions => {
     return {
         useFactory: async (configService: ConfigService) => {
             return {
                 transport: {
-                    host: configService.getOrThrow<string>(`mailer.host`),
-                    port: configService.getOrThrow<number>(`mailer.port`),
+                    service: 'gmail',
                     secure: false,
                     auth: {
-                        user: configService.getOrThrow<string>(`mailer.user`),
-                        pass: configService.getOrThrow<string>(
-                            `mailer.password`,
-                        ),
+                        user: configService.getOrThrow<string>(`mail.user`),
+                        pass: configService.getOrThrow<string>(`mail.password`),
                     },
                 },
                 defaults: {

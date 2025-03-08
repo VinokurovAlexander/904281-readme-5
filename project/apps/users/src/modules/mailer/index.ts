@@ -1,1 +1,1 @@
-export { mailerConfig } from './config';
+export { mailConfig } from './config';

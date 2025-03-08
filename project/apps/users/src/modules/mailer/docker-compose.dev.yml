@@ -1,0 +1,8 @@
+services:
+    readme.users.smtp:
+        image: gessnerfl/fake-smtp-server
+        container_name: "readme.users.smtp"
+        hostname: "readme.users.smtp"
+        ports:
+            - "8025:8025"
+            - "1085:8080"

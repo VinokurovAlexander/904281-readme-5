@@ -7,6 +7,7 @@ import { AuthService } from './service';
 import { UserModule } from '../user/module';
 import { getJwtOptions } from '../jwt';
 import { ConfirmationModule } from '../confirmation';
+import { MailModule } from '../mailer/module';
 
 @Module({
     imports: [
@@ -16,6 +17,7 @@ import { ConfirmationModule } from '../confirmation';
             useFactory: getJwtOptions,
         }),
         ConfirmationModule,
+        MailModule,
     ],
     providers: [AuthService],
     controllers: [AuthController],
