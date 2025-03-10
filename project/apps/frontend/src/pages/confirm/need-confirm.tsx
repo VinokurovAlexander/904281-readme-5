@@ -14,7 +14,7 @@ import { State } from '../../types';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
-export const ConfirmMessage = () => {
+export const NeedConfirm = () => {
     const user = useAppSelector(selectUser);
     const [state, setState] = useState<State>('idle');
 

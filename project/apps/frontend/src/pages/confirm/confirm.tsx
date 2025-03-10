@@ -34,7 +34,7 @@ export const Confirm = () => {
     };
 
     useEffect(() => {
-        if (!token || !user || state === 'fulfilled') {
+        if (!token || !user || state !== 'idle') {
             return;
         }
 

@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import { Navigate, useMatch } from 'react-router-dom';
 import { Box, CircularProgress } from '@mui/material';
 import { useAuth } from './hooks';
-import { ConfirmMessage } from '../../pages';
+import { NeedConfirm } from '../../pages';
 
 interface AppRouteProps {
     isProtected?: boolean;
@@ -43,7 +43,7 @@ export const AppRoute: FC<AppRouteProps> = ({
         }
 
         if (isUserAuthenticated && !isUserConfirmed && !isConfirmPage) {
-            return <ConfirmMessage />;
+            return <NeedConfirm />;
         }
 
         return children;

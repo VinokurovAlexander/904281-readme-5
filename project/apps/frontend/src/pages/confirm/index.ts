@@ -1,2 +1,2 @@
-export { ConfirmMessage } from './message';
+export { NeedConfirm } from './need-confirm';
 export { Confirm } from './confirm';
