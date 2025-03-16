@@ -12,7 +12,7 @@ import {
 import { confirmUser } from '../../api';
 import { Expired } from './expired';
 import { Error } from './error';
-import { ActivationSuccessMessage } from './success';
+import { ActivationSuccessMessage } from './activation-success-message';
 
 enum ErrorType {
     TOKEN_NOT_FOUND = 'token no found',

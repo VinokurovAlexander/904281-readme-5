@@ -1,5 +1,5 @@
 import { Box, Paper, Typography } from '@mui/material';
-import { ReactNode } from 'react';
+import { ReactNode, FC } from 'react';
 import { ActionButton } from './action-button';
 
 interface MessageCardProps {
@@ -11,6 +11,7 @@ interface MessageCardProps {
         onClick: () => void;
         label: string;
     };
+    children?: ReactNode;
 }
 
 export const MessageCard = ({
@@ -18,6 +19,7 @@ export const MessageCard = ({
     title,
     message,
     buttonProps,
+    children,
 }: MessageCardProps) => {
     return (
         <Box display="flex" alignItems="center" flexDirection="column">
@@ -38,6 +40,7 @@ export const MessageCard = ({
                 <Typography variant="body1" sx={{ mb: 3 }}>
                     {message}
                 </Typography>
+                {children}
                 {buttonProps && (
                     <ActionButton
                         loading={buttonProps.loading}
