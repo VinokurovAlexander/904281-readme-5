@@ -19,6 +19,8 @@ enum ErrorType {
     UNKNOWN = 'unknown',
 }
 
+const controller = new AbortController();
+
 export const Confirm = () => {
     const dispatch = useAppDispatch();
 
@@ -44,9 +46,11 @@ export const Confirm = () => {
             return;
         }
 
+        const signal = controller.signal;
+
         setState('loading');
 
-        confirmUser(user.id, token)
+        confirmUser(user.id, token, { signal })
             .then((response) => {
                 const { statusCode } = response;
 
@@ -67,6 +71,12 @@ export const Confirm = () => {
                 errorHandle(ErrorType.UNKNOWN);
             });
     }, [dispatch, state, token, user]);
+
+    useEffect(() => {
+        return () => {
+            controller.abort();
+        };
+    }, []);
 
     return (
         <Layout>

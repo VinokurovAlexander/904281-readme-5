@@ -4,9 +4,12 @@ import { User } from '@project/types';
 
 const baseUrl = API_BASE_URL + apiPrefix + '/confirmation';
 
+type FetchOptions = { signal?: AbortSignal };
+
 export const confirmUser = (
     userId: string,
     token: string,
+    options?: FetchOptions,
 ): Promise<ApiResponse<User>> =>
     fetch(baseUrl, {
         method: 'POST',
@@ -14,6 +17,7 @@ export const confirmUser = (
         headers: {
             'Content-Type': 'application/json',
         },
+        signal: options?.signal,
     }).then((response) => response.json());
 
 export const updateConfirm = (userId: string): Promise<ApiResponse<User>> =>
