@@ -1,3 +1,5 @@
+import { BaseUser, User } from './user';
+
 export interface Category {
     id: string;
     title: string;
@@ -35,4 +37,8 @@ export interface Post {
     comments: Comment[];
     likes: Like[];
     reposts: Repost[];
+}
+
+export interface PostWithUser extends Post {
+    user: User;
 }

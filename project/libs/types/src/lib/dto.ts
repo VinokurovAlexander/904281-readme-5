@@ -1,4 +1,5 @@
-import { IsString, IsUUID } from 'class-validator';
+import { IsMongoId, IsString, IsUUID } from 'class-validator';
+import { Expose } from 'class-transformer';
 
 export class CreateCommentDto {
     @IsString()
@@ -9,4 +10,20 @@ export class CreateCommentDto {
 
     @IsUUID()
     postId: string;
+}
+
+export class ConfirmMailDto {
+    @Expose()
+    @IsMongoId()
+    userId: string;
+
+    @Expose()
+    @IsString()
+    token: string;
+}
+
+export class UpdateConfirmDto {
+    @Expose()
+    @IsMongoId()
+    userId: string;
 }

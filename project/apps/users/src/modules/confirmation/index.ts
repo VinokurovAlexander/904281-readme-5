@@ -1,0 +1,1 @@
+export { ConfirmationModule } from './module';

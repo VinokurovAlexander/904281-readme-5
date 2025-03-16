@@ -3,6 +3,7 @@ import {
     Catch,
     ExceptionFilter,
     HttpStatus,
+    Logger,
 } from '@nestjs/common';
 import { AxiosError } from 'axios';
 

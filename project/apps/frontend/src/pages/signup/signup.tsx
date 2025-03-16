@@ -2,7 +2,14 @@ import { FormEvent, useState } from 'react';
 import { signup } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, userActions } from '../../store';
-import { Alert, Box, Button, Container, TextField } from '@mui/material';
+import {
+    Alert,
+    Box,
+    Button,
+    CircularProgress,
+    Container,
+    TextField,
+} from '@mui/material';
 import { Layout, Password } from '../../components';
 
 export const Signup = () => {
@@ -12,6 +19,7 @@ export const Signup = () => {
     const [firstPassword, setFirstPassword] = useState('');
     const [secondPassword, setSecondPassword] = useState('');
 
+    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | string[] | null>(null);
 
     const navigate = useNavigate();
@@ -38,6 +46,8 @@ export const Signup = () => {
             return;
         }
 
+        setIsLoading(true);
+
         signup({ mail, firstname, lastname, password: firstPassword })
             .then((result) => {
                 if (result.statusCode === 200) {
@@ -47,7 +57,10 @@ export const Signup = () => {
                     setError(result.message);
                 }
             })
-            .catch(() => setError('Что-то пошло не так'));
+            .catch(() => setError('Что-то пошло не так'))
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
 
     return (
@@ -75,6 +88,7 @@ export const Signup = () => {
                         value={firstname}
                         onChange={(e) => setFirstname(e.target.value)}
                         required
+                        disabled={isLoading}
                     />
 
                     <TextField
@@ -85,6 +99,7 @@ export const Signup = () => {
                         value={lastname}
                         onChange={(e) => setLastname(e.target.value)}
                         required
+                        disabled={isLoading}
                     />
 
                     <TextField
@@ -96,17 +111,20 @@ export const Signup = () => {
                         value={mail}
                         onChange={(e) => setMail(e.target.value)}
                         required
+                        disabled={isLoading}
                     />
 
                     <Password
                         value={firstPassword}
                         onChange={setFirstPassword}
+                        disabled={isLoading}
                     />
 
                     <Password
                         label="Подтвердите пароль"
                         value={secondPassword}
                         onChange={setSecondPassword}
+                        disabled={isLoading}
                     />
 
                     <Button
@@ -114,6 +132,10 @@ export const Signup = () => {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
+                        disabled={isLoading}
+                        startIcon={
+                            isLoading ? <CircularProgress size={20} /> : null
+                        }
                     >
                         Зарегистрироваться
                     </Button>

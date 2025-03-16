@@ -1,0 +1,9 @@
+### Send POST request with json body
+POST http://localhost:3003/api/v1/mail/send-confirm
+Content-Type: application/json
+
+{
+    "mail": "jekayim531@kaiav.com",
+    "username": "lol kek"
+}
+

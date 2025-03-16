@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { Detail, Login, Popular, Signup } from '../pages';
+import { Confirm, Detail, Login, Popular, Signup } from '../pages';
 import { AppRoute } from '../components';
 
 export const Router = () => (
@@ -34,6 +34,14 @@ export const Router = () => (
             element={
                 <AppRoute isProtected>
                     <Detail />
+                </AppRoute>
+            }
+        />
+        <Route
+            path="/confirm/:id"
+            element={
+                <AppRoute isProtected>
+                    <Confirm />
                 </AppRoute>
             }
         />

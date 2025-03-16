@@ -10,6 +10,7 @@ export interface BaseUser extends BaseEntity {
     following: IdType[];
     subscribers: IdType[];
     password: string;
+    isConfirmed: boolean;
 }
 
 export interface User extends BaseUser {

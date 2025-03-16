@@ -16,10 +16,13 @@ import { CreateUserDto, LoginUserDto } from './dto';
 import { AxiosExceptionFilter } from '../filters';
 import { Response, Request } from 'express';
 import {
+    getUserIdFromPostAuthor,
     getUsersIdFromPostComments,
     mergePostCommentsWithUsers,
 } from '../utils';
-import { CreateCommentDto } from '@project/types';
+import { ConfirmMailDto, CreateCommentDto } from '@project/types';
+import { mergePostsWithUsers } from '../utils/posts';
+import { UpdateConfirmDto } from '@project/types';
 
 @Controller()
 @UseFilters(AxiosExceptionFilter)
@@ -52,12 +55,12 @@ export class AppController {
         @Body() createUserDto: CreateUserDto,
         @Res() res: Response,
     ) {
-        const { data } = await this.httpService.axiosRef.post(
+        const { data: userResponse } = await this.httpService.axiosRef.post(
             `${AppServiceURL.Auth}/register`,
             createUserDto,
         );
 
-        res.cookie('access_token', data.accessToken, {
+        res.cookie('access_token', userResponse.accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'strict',
@@ -65,16 +68,28 @@ export class AppController {
             maxAge: 1000 * 60 * 5,
         });
 
-        return res.send(data);
+        return res.send(userResponse);
     }
 
     @Get('posts')
     public async getPosts() {
-        const { data } = await this.httpService.axiosRef.get(
+        const { data: postResponse } = await this.httpService.axiosRef.get(
             `${AppServiceURL.Posts}`,
         );
 
-        return data;
+        const userIds = getUserIdFromPostAuthor(postResponse.data);
+
+        const { data: usersResponse } = await this.httpService.axiosRef.post(
+            `${AppServiceURL.Users}/get-by-ids`,
+            { ids: userIds },
+        );
+
+        const posts = mergePostsWithUsers(
+            postResponse.data,
+            usersResponse.data,
+        );
+
+        return { statusCode: HttpStatus.OK, data: posts };
     }
 
     @Get('posts/:id')
@@ -114,11 +129,29 @@ export class AppController {
 
     @Post('add-comment')
     public async addComment(@Body() dto: CreateCommentDto) {
-        Logger.log('dto is', dto);
-
         const { data } = await this.httpService.axiosRef.post(
             `${AppServiceURL.Comments}/add`,
             dto,
+        );
+
+        return data;
+    }
+
+    @Post('confirmation')
+    public async confirmUser(@Body() body: ConfirmMailDto) {
+        const { data } = await this.httpService.axiosRef.post(
+            `${AppServiceURL.Confirm}`,
+            body,
+        );
+
+        return data;
+    }
+
+    @Post('confirmation/update')
+    public async updateConfirmation(@Body() body: UpdateConfirmDto) {
+        const { data } = await this.httpService.axiosRef.post(
+            `${AppServiceURL.Confirm}/update`,
+            body,
         );
 
         return data;

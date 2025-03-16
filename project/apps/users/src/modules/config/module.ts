@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { mongoConfig } from '@project/config';
 import { jwtConfig } from '../jwt';
+import { mailConfig } from '../mailer';
 
 @Module({
     imports: [
@@ -9,7 +10,7 @@ import { jwtConfig } from '../jwt';
             isGlobal: true,
             cache: true,
             envFilePath: 'apps/users/.env',
-            load: [mongoConfig, jwtConfig],
+            load: [mongoConfig, jwtConfig, mailConfig],
         }),
     ],
 })

@@ -5,6 +5,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
     collection: 'users',
     timestamps: true,
     toObject: { virtuals: true },
+    toJSON: { virtuals: true },
 })
 export class UserModel extends Document<string> {
     @Prop({ required: true })
@@ -27,6 +28,9 @@ export class UserModel extends Document<string> {
 
     @Prop()
     public subscribers: string[];
+
+    @Prop({ required: true })
+    public isConfirmed: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

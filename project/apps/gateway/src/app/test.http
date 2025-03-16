@@ -14,3 +14,21 @@ Content-Type: application/json
     "userId": "67c1c5f060c781d3640416ce",
     "postId": "d6e9110b-31a8-4229-a895-1b3e3b318cb5"
 }
+
+
+### ConfirmUser
+POST http://localhost:3000/api/v1/confirmation
+Content-Type: application/json
+
+{
+    "userId": "67cc28ba1dd17c18a1b9fe99",
+    "token": "f0ed48d7-c1d6-46fd-af6c-cfe4ae993653"
+}
+
+### Updateconfirm
+POST http://localhost:3000/api/v1/confirmation/update
+Content-Type: application/json
+
+{
+    "userId": "67cc63bad085f6ae8ed7f8a9"
+}

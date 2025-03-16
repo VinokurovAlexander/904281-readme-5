@@ -6,12 +6,14 @@ interface Password {
     onChange: (e: string) => void;
     value: string;
     label?: string;
+    disabled?: boolean;
 }
 
 export const Password: FC<Password> = ({
     onChange,
     value,
     label = 'Пароль',
+    disabled = false,
 }) => {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -48,6 +50,7 @@ export const Password: FC<Password> = ({
                     ),
                 },
             }}
+            disabled={disabled}
         />
     );
 };

@@ -12,12 +12,16 @@ import { CreateUserDto, LoginUserDto } from '../user/dto';
 import { UsersRepository } from '../user/repository';
 import { RegisteringUser, User } from '../user/user.entity';
 import { AccessTokenPayload } from '../../types';
+import { ConfirmationService } from '../confirmation/service';
+import { MailService } from '../mailer/service';
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly usersRepository: UsersRepository,
         private readonly jwtService: JwtService,
+        private readonly confirmationService: ConfirmationService,
+        private readonly mailService: MailService,
     ) {}
 
     public async register(dto: CreateUserDto) {
@@ -28,9 +32,23 @@ export class AuthService {
             throw new ConflictException('User with this email exists');
         }
 
-        const user = await new RegisteringUser(dto).init(dto.password);
+        const userEntity = await new RegisteringUser(dto).init(dto.password);
 
-        return this.usersRepository.saveEntityWithoutId(user);
+        const storedUser = await this.usersRepository.saveEntityWithoutId(
+            userEntity,
+        );
+        const accessToken = await this.createUserToken(storedUser);
+        const confirmData = await this.confirmationService.createToken(
+            storedUser.id,
+        );
+
+        await this.mailService.sendConfirmMessage(
+            storedUser.mail,
+            storedUser.getUsername(),
+            confirmData.token,
+        );
+
+        return { user: storedUser, accessToken };
     }
 
     public async verifyUser(dto: LoginUserDto) {
@@ -79,8 +97,6 @@ export class AuthService {
         } catch (error) {
             throw new UnauthorizedException('access not valid');
         }
-
-        Logger.log('token payload', payload);
 
         const user = await this.usersRepository.findByMail(payload.mail);
 
